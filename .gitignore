@@ -361,3 +361,7 @@ FodyWeavers.xsd
 
 # Visual Studio Code
 .vscode/
+
+# Uploads
+src/ZPProductManagement.Api/wwwroot/uploads/*
+!src/ZPProductManagement.Api/wwwroot/uploads/.gitkeep
