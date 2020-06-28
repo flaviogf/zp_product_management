@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using ZPProductManagement.Application;
 using ZPProductManagement.Common;
 
-namespace ZPProductManagement.Api.Repositories
+namespace ZPProductManagement.Api.Infrastructure
 {
     public class DapperFileRepository : IFileRepository
     {

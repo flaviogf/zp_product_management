@@ -1,6 +1,6 @@
 ﻿using System.Data;
 
-namespace ZPProductManagement.Api
+namespace ZPProductManagement.Api.Infrastructure
 {
     public interface IUnitOfWork
     {

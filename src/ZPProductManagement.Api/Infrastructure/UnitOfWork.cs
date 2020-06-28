@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Data;
 
-namespace ZPProductManagement.Api
+namespace ZPProductManagement.Api.Infrastructure
 {
     public sealed class UnitOfWork : IUnitOfWork, IDisposable
     {

@@ -8,7 +8,6 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Reflection;
 using ZPProductManagement.Api.Infrastructure;
-using ZPProductManagement.Api.Repositories;
 using ZPProductManagement.Api.ViewModels;
 using ZPProductManagement.Application;
 

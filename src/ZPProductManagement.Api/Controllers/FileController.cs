@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.IO;
 using System.Threading.Tasks;
+using ZPProductManagement.Api.Infrastructure;
 using ZPProductManagement.Api.ViewModels;
 using ZPProductManagement.Application;
 
