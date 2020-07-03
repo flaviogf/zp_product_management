@@ -1,0 +1,12 @@
+﻿@using System;
+@using ZPProductManagement.Web.ViewModels;
+
+@model CreateFileViewModel
+
+<form asp-action="Create" asp-controller="File" enctype="multipart/form-data">
+    <input asp-for="Id" value="@Guid.NewGuid()" hidden />
+
+    <input asp-for="File" />
+
+    <button type="submit">Upload</button>
+</form>
