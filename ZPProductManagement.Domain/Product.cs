@@ -5,16 +5,7 @@ namespace ZPProductManagement.Domain
 {
     public class Product
     {
-        public Product
-        (
-            Guid id,
-            Category category,
-            string name,
-            string description,
-            decimal price,
-            uint quantity,
-            IReadOnlyList<File> files
-        )
+        public Product(Guid id, Category category, string name, string description, decimal price, uint quantity, IReadOnlyList<File> files)
         {
             Id = id;
             Category = category;
