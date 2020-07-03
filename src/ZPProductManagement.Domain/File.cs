@@ -1,23 +1,21 @@
-﻿using System;
-
-namespace ZPProductManagement.Domain
+﻿namespace ZPProductManagement.Domain
 {
     public class File
     {
-        public File(Guid id, string name, string path, string ext)
+        public File(Identifier id, Name name, Path path, Extension extension)
         {
             Id = id;
             Name = name;
             Path = path;
-            Ext = ext;
+            Extension = extension;
         }
 
-        public Guid Id { get; }
+        public Identifier Id { get; }
 
-        public string Name { get; }
+        public Name Name { get; }
 
-        public string Path { get; }
+        public Path Path { get; }
 
-        public string Ext { get; }
+        public Extension Extension { get; }
     }
 }
