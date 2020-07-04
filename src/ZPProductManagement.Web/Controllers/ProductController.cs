@@ -29,9 +29,9 @@ namespace ZPProductManagement.Web.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create()
         {
-            var createProduct = new CreateProduct(Guid.NewGuid(), "Shoes", "Adidas Grand Court", "Color: White | Size: 42", 49.99M, 1, new List<string> { "avatar" });
+            var productAdapter = new InputProductAdapter(Guid.NewGuid(), "Adidas Grand Court", "Color: White | Size: 42", 49.99M, 1, categoryName: "Shoes", fileNames: new List<string> { "avatar" });
 
-            var result = await _createProductApplication.Execute(createProduct);
+            var result = await _createProductApplication.Execute(productAdapter);
 
             if (result.Failure)
             {

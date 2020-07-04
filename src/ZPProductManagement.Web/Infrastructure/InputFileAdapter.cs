@@ -1,10 +1,11 @@
 ﻿using System;
+using ZPProductManagement.Application.Files;
 
-namespace ZPProductManagement.Application.Files
+namespace ZPProductManagement.Web.Infrastructure
 {
-    public class StoredFile
+    public class InputFileAdapter : IFileAdapter
     {
-        public StoredFile(Guid id, string name, string path, string extension)
+        public InputFileAdapter(Guid id, string name, string path, string extension)
         {
             Id = id;
             Name = name;

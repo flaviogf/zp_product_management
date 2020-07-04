@@ -19,7 +19,7 @@ namespace ZPProductManagement.Web.Infrastructure
             _logger = logger;
         }
 
-        public async Task<Maybe<StoredCategory>> FindByName(string name)
+        public async Task<Maybe<ICategoryAdapter>> FindByName(string name)
         {
             try
             {
@@ -30,9 +30,9 @@ namespace ZPProductManagement.Web.Infrastructure
                     Name = name
                 };
 
-                var storedCategory = await _uow.Connection.QueryFirstOrDefaultAsync<StoredCategory>(sql, param, transaction: _uow.Transaction);
+                var categoryAdapter = await _uow.Connection.QueryFirstOrDefaultAsync<InputCategoryAdapter>(sql, param, transaction: _uow.Transaction);
 
-                return storedCategory;
+                return categoryAdapter;
             }
             catch (Exception ex)
             {

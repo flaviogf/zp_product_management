@@ -20,54 +20,47 @@ namespace ZPProductManagement.Application.Products
             _productRepository = productRepository;
         }
 
-        public async Task<Result> Execute(CreateProduct createProduct)
+        public async Task<Result> Execute(IProductAdapter productAdapter)
         {
-            var productOrError = await GetProduct(createProduct);
+            var getProductOrError = await GetProductOrError(productAdapter);
 
-            if (productOrError.Failure)
+            if (getProductOrError.Failure)
             {
-                return Result.Fail(productOrError.Message);
+                return Result.Fail(getProductOrError.Message);
             }
 
-            var createdProductOrError = await SaveProduct(productOrError.Value);
+            var saveProductOrError = await SaveProductOrError(getProductOrError.Value);
 
-            if (createdProductOrError.Failure)
+            if (saveProductOrError.Failure)
             {
-                return Result.Fail(createdProductOrError.Message);
+                return Result.Fail(saveProductOrError.Message);
             }
 
             return Result.Ok();
         }
 
-        private async Task<Result<Product>> GetProduct(CreateProduct createProduct)
+        private async Task<Result<Product>> GetProductOrError(IProductAdapter productAdapter)
         {
-            var maybeStoredProduct = await _productRepository.FindById(createProduct.Id);
+            var maybeProduct = await _productRepository.FindById(productAdapter.Id);
 
-            if (maybeStoredProduct.HasValue)
+            if (maybeProduct.HasValue)
             {
                 return Result.Fail<Product>("ProductId is already taken");
             }
 
-            var maybeStoredCategory = await _categoryRepository.FindByName(createProduct.CategoryName);
+            var categoryOrError = await GetCategoryOrError(productAdapter.CategoryName);
 
-            if (maybeStoredCategory.HasNoValue)
-            {
-                return Result.Fail<Product>("Category does not exist");
-            }
+            var filesOrError = await GetFilesOrErrors(productAdapter.FileNames);
 
-            var idOrError = Identifier.Of(createProduct.Id);
+            var idOrError = Identifier.Of(productAdapter.Id);
 
-            var categoryOrError = maybeStoredCategory.Value.ToCategory();
+            var nameOrError = Name.Of(productAdapter.Name);
 
-            var nameOrError = Name.Of(createProduct.Name);
+            var descriptionOrError = Description.Of(productAdapter.Description);
 
-            var descriptionOrError = Description.Of(createProduct.Description);
+            var priceOrError = Price.Of(productAdapter.Price);
 
-            var priceOrError = Price.Of(createProduct.Price);
-
-            var quantityOrError = Quantity.Of(createProduct.Quantity);
-
-            var filesOrError = await GetFiles(createProduct.FileNames);
+            var quantityOrError = Quantity.Of(productAdapter.Quantity);
 
             var result = Result.Combine
             (
@@ -87,16 +80,43 @@ namespace ZPProductManagement.Application.Products
             return Result.Ok(product);
         }
 
-        private async Task<IEnumerable<Result<File>>> GetFiles(IEnumerable<string> fileNames)
+        private async Task<Result<Category>> GetCategoryOrError(string categoryName)
         {
-            var tasks = fileNames.Select(GetFile);
+            var maybeCategory = await _categoryRepository.FindByName(categoryName);
+
+            if (maybeCategory.HasNoValue)
+            {
+                return Result.Fail<Category>("Category does not exist");
+            }
+
+            var categoryAdapter = maybeCategory.Value;
+
+            var idOrError = Identifier.Of(categoryAdapter.Id);
+
+            var nameOrError = Name.Of(categoryAdapter.Name);
+
+            var result = Result.Combine(idOrError, nameOrError);
+
+            if (result.Failure)
+            {
+                return Result.Fail<Category>(result.Message);
+            }
+
+            var category = new Category(idOrError.Value, nameOrError.Value);
+
+            return Result.Ok(category);
+        }
+
+        private async Task<IEnumerable<Result<File>>> GetFilesOrErrors(IEnumerable<string> fileNames)
+        {
+            var tasks = fileNames.Select(GetFileOrError);
 
             var results = await Task.WhenAll(tasks);
 
             return results;
         }
 
-        private async Task<Result<File>> GetFile(string fileName)
+        private async Task<Result<File>> GetFileOrError(string fileName)
         {
             var maybeFile = await _fileRepository.FindByName(fileName);
 
@@ -105,25 +125,40 @@ namespace ZPProductManagement.Application.Products
                 return Result.Fail<File>("File does not exist");
             }
 
-            var storedFile = maybeFile.Value;
+            var fileAdapter = maybeFile.Value;
 
-            var result = storedFile.ToFile();
+            var idOrError = Identifier.Of(fileAdapter.Id);
 
-            return result;
-        }
+            var nameOrError = Name.Of(fileAdapter.Name);
 
-        private async Task<Result<CreatedProduct>> SaveProduct(Product product)
-        {
-            var createdProduct = new CreatedProduct(product);
+            var pathOrError = Path.Of(fileAdapter.Path);
 
-            var result = await _productRepository.Save(createdProduct);
+            var extensionOrError = Extension.Of(fileAdapter.Extension);
+
+            var result = Result.Combine(idOrError, nameOrError, pathOrError, extensionOrError);
 
             if (result.Failure)
             {
-                return Result.Fail<CreatedProduct>(result.Message);
+                return Result.Fail<File>(result.Message);
             }
 
-            return Result.Ok(createdProduct);
+            var file = new File(idOrError.Value, nameOrError.Value, pathOrError.Value, extensionOrError.Value);
+
+            return Result.Ok(file);
+        }
+
+        private async Task<Result<Product>> SaveProductOrError(Product product)
+        {
+            IProductAdapter productAdapter = new OutputProductAdapter(product);
+
+            var result = await _productRepository.Save(productAdapter);
+
+            if (result.Failure)
+            {
+                return Result.Fail<Product>(result.Message);
+            }
+
+            return Result.Ok(product);
         }
     }
 }

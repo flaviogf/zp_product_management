@@ -7,8 +7,8 @@ namespace ZPProductManagement.Application
 {
     public interface IProductRepository
     {
-        Task<Result> Save(CreatedProduct createdProduct);
+        Task<Result> Save(IProductAdapter productAdapter);
 
-        Task<Maybe<StoredProduct>> FindById(Guid id);
+        Task<Maybe<IProductAdapter>> FindById(Guid id);
     }
 }

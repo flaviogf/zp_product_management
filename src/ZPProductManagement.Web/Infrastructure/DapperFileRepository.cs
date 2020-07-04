@@ -19,13 +19,13 @@ namespace ZPProductManagement.Web.Infrastructure
             _logger = logger;
         }
 
-        public async Task<Result> Save(CreatedFile file)
+        public async Task<Result> Save(IFileAdapter fileAdapter)
         {
             try
             {
                 var sql = "INSERT INTO [dbo].[Files] ([Id], [Name], [Path], [Extension]) VALUES (@Id, @Name, @Path, @Extension)";
 
-                await _uow.Connection.ExecuteAsync(sql, file, transaction: _uow.Transaction);
+                await _uow.Connection.ExecuteAsync(sql, fileAdapter, transaction: _uow.Transaction);
 
                 return Result.Ok();
             }
@@ -37,7 +37,7 @@ namespace ZPProductManagement.Web.Infrastructure
             }
         }
 
-        public async Task<Maybe<StoredFile>> FindByName(string name)
+        public async Task<Maybe<IFileAdapter>> FindByName(string name)
         {
             try
             {
@@ -48,9 +48,9 @@ namespace ZPProductManagement.Web.Infrastructure
                     Name = name
                 };
 
-                var storedFile = await _uow.Connection.QueryFirstOrDefaultAsync<StoredFile>(sql, param, transaction: _uow.Transaction);
+                var fileAdapter = await _uow.Connection.QueryFirstOrDefaultAsync<InputFileAdapter>(sql, param, transaction: _uow.Transaction);
 
-                return storedFile;
+                return fileAdapter;
             }
             catch (Exception ex)
             {

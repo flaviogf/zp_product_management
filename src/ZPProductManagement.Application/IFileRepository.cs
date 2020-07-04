@@ -6,8 +6,8 @@ namespace ZPProductManagement.Application
 {
     public interface IFileRepository
     {
-        Task<Result> Save(CreatedFile file);
+        Task<Result> Save(IFileAdapter file);
 
-        Task<Maybe<StoredFile>> FindByName(string name);
+        Task<Maybe<IFileAdapter>> FindByName(string name);
     }
 }

@@ -3,11 +3,11 @@ using ZPProductManagement.Domain.Entities;
 
 namespace ZPProductManagement.Application.Files
 {
-    public class CreatedFile
+    internal class OutputFileAdapter : IFileAdapter
     {
         private readonly File _file;
 
-        internal CreatedFile(File file)
+        internal OutputFileAdapter(File file)
         {
             _file = file;
         }

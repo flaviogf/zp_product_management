@@ -20,17 +20,17 @@ namespace ZPProductManagement.Web.Infrastructure
             _logger = logger;
         }
 
-        public async Task<Result> Save(CreatedProduct createdProduct)
+        public async Task<Result> Save(IProductAdapter productAdapter)
         {
             try
             {
-                var insertProductSql = "INSERT INTO [dbo].[Products] ([Id], [CategoryId], [Name], [Description], [Price], [Quantity]) VALUES (@Id, @CategoryId, @Name, @Description, @Price, @Quantity)";
+                var insertProduct = "INSERT INTO [dbo].[Products] ([Id], [CategoryId], [Name], [Description], [Price], [Quantity]) VALUES (@Id, @CategoryId, @Name, @Description, @Price, @Quantity)";
 
-                await _uow.Connection.ExecuteAsync(insertProductSql, createdProduct, transaction: _uow.Transaction);
+                await _uow.Connection.ExecuteAsync(insertProduct, productAdapter, transaction: _uow.Transaction);
 
-                var insertProductFilesSql = "INSERT INTO [dbo].[ProductFiles] ([ProductId], [FileId]) VALUES (@ProductId, @FileId)";
+                var insertFiles = "INSERT INTO [dbo].[ProductFiles] ([ProductId], [FileId]) VALUES (@ProductId, @FileId)";
 
-                var tasks = createdProduct.Files.Select(it => _uow.Connection.ExecuteAsync(insertProductFilesSql, new { it.ProductId, it.FileId }, transaction: _uow.Transaction));
+                var tasks = productAdapter.FileIds.Select(it => _uow.Connection.ExecuteAsync(insertFiles, new { ProductId = productAdapter.Id, FileId = it }, transaction: _uow.Transaction));
 
                 await Task.WhenAll(tasks);
 
@@ -44,7 +44,7 @@ namespace ZPProductManagement.Web.Infrastructure
             }
         }
 
-        public async Task<Maybe<StoredProduct>> FindById(Guid id)
+        public async Task<Maybe<IProductAdapter>> FindById(Guid id)
         {
             try
             {
@@ -55,9 +55,9 @@ namespace ZPProductManagement.Web.Infrastructure
                     Id = id
                 };
 
-                var storedProduct = await _uow.Connection.QueryFirstOrDefaultAsync<StoredProduct>(sql, param, transaction: _uow.Transaction);
+                var productAdapter = await _uow.Connection.QueryFirstOrDefaultAsync<InputProductAdapter>(sql, param, transaction: _uow.Transaction);
 
-                return storedProduct;
+                return productAdapter;
             }
             catch (Exception ex)
             {

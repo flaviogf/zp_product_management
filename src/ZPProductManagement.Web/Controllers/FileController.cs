@@ -41,9 +41,9 @@ namespace ZPProductManagement.Web.Controllers
 
             var path = $"{Path.GetRandomFileName()}{extension}";
 
-            var createFile = new CreateFile(viewModel.Id, name, path, extension);
+            var fileAdapter = new InputFileAdapter(viewModel.Id, name, path, extension);
 
-            var result = await _createFileApplication.Execute(createFile);
+            var result = await _createFileApplication.Execute(fileAdapter);
 
             if (result.Failure)
             {

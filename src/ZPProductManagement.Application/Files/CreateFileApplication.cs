@@ -14,41 +14,41 @@ namespace ZPProductManagement.Application.Files
             _fileRepository = fileRepository;
         }
 
-        public async Task<Result> Execute(CreateFile createFile)
+        public async Task<Result> Execute(IFileAdapter fileAdapter)
         {
-            var fileOrError = await GetFileOrError(createFile);
+            var getFileOrError = await GetFileOrError(fileAdapter);
 
-            if (fileOrError.Failure)
+            if (getFileOrError.Failure)
             {
-                return Result.Fail(fileOrError.Message);
+                return Result.Fail(getFileOrError.Message);
             }
 
-            var createdFileOrError = await SaveFileOrError(fileOrError.Value);
+            var saveFileOrError = await SaveFileOrError(getFileOrError.Value);
 
-            if (createdFileOrError.Failure)
+            if (saveFileOrError.Failure)
             {
-                return Result.Fail(createdFileOrError.Message);
+                return Result.Fail(saveFileOrError.Message);
             }
 
             return Result.Ok();
         }
 
-        private async Task<Result<File>> GetFileOrError(CreateFile createFile)
+        private async Task<Result<File>> GetFileOrError(IFileAdapter fileAdapter)
         {
-            var maybeStoredFile = await _fileRepository.FindByName(createFile.Name);
+            var maybeFile = await _fileRepository.FindByName(fileAdapter.Name);
 
-            if (maybeStoredFile.HasValue)
+            if (maybeFile.HasValue)
             {
                 return Result.Fail<File>("Name is already taken");
             }
 
-            var idOrError = Identifier.Of(createFile.Id);
+            var idOrError = Identifier.Of(fileAdapter.Id);
 
-            var nameOrError = Name.Of(createFile.Name);
+            var nameOrError = Name.Of(fileAdapter.Name);
 
-            var pathOrError = Path.Of(createFile.Path);
+            var pathOrError = Path.Of(fileAdapter.Path);
 
-            var extensionOrError = Extension.Of(createFile.Extension);
+            var extensionOrError = Extension.Of(fileAdapter.Extension);
 
             var result = Result.Combine(nameOrError, pathOrError, extensionOrError);
 
@@ -62,18 +62,18 @@ namespace ZPProductManagement.Application.Files
             return Result.Ok(file);
         }
 
-        private async Task<Result<CreatedFile>> SaveFileOrError(File file)
+        private async Task<Result<File>> SaveFileOrError(File file)
         {
-            var createdFile = new CreatedFile(file);
+            IFileAdapter fileAdapter = new OutputFileAdapter(file);
 
-            var result = await _fileRepository.Save(createdFile);
+            var result = await _fileRepository.Save(fileAdapter);
 
             if (result.Failure)
             {
-                return Result.Fail<CreatedFile>(result.Message);
+                return Result.Fail<File>(result.Message);
             }
 
-            return Result.Ok(createdFile);
+            return Result.Ok(file);
         }
     }
 }

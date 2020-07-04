@@ -6,6 +6,6 @@ namespace ZPProductManagement.Application
 {
     public interface ICategoryRepository
     {
-        Task<Maybe<StoredCategory>> FindByName(string name);
+        Task<Maybe<ICategoryAdapter>> FindByName(string name);
     }
 }
