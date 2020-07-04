@@ -1,8 +1,9 @@
 ﻿using System.Threading.Tasks;
 using ZPProductManagement.Common;
-using ZPProductManagement.Domain;
+using ZPProductManagement.Domain.Entities;
+using ZPProductManagement.Domain.ValueObjects;
 
-namespace ZPProductManagement.Application
+namespace ZPProductManagement.Application.Files
 {
     public class CreateFileApplication
     {
@@ -32,8 +33,15 @@ namespace ZPProductManagement.Application
             return Result.Ok();
         }
 
-        private Task<Result<File>> GetFileOrError(CreateFile createFile)
+        private async Task<Result<File>> GetFileOrError(CreateFile createFile)
         {
+            var maybeStoredFile = await _fileRepository.FindByName(createFile.Name);
+
+            if (maybeStoredFile.HasValue)
+            {
+                return Result.Fail<File>("Name is already taken");
+            }
+
             var idOrError = Identifier.Of(createFile.Id);
 
             var nameOrError = Name.Of(createFile.Name);
@@ -46,12 +54,12 @@ namespace ZPProductManagement.Application
 
             if (result.Failure)
             {
-                return Task.FromResult(Result.Fail<File>(result.Message));
+                return Result.Fail<File>(result.Message);
             }
 
             var file = new File(idOrError.Value, nameOrError.Value, pathOrError.Value, extensionOrError.Value);
 
-            return Task.FromResult(Result.Ok(file));
+            return Result.Ok(file);
         }
 
         private async Task<Result<CreatedFile>> SaveFileOrError(File file)

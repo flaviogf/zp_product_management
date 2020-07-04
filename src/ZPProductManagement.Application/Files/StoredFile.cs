@@ -1,10 +1,10 @@
 ﻿using System;
 
-namespace ZPProductManagement.Application
+namespace ZPProductManagement.Application.Files
 {
-    public class CreateFile
+    public class StoredFile
     {
-        public CreateFile(Guid id, string name, string path, string extension)
+        public StoredFile(Guid id, string name, string path, string extension)
         {
             Id = id;
             Name = name;

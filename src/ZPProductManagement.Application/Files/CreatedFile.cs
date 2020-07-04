@@ -1,7 +1,7 @@
 ﻿using System;
-using ZPProductManagement.Domain;
+using ZPProductManagement.Domain.Entities;
 
-namespace ZPProductManagement.Application
+namespace ZPProductManagement.Application.Files
 {
     public class CreatedFile
     {
