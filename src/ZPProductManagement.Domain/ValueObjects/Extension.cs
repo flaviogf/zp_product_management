@@ -1,6 +1,6 @@
 ﻿using ZPProductManagement.Common;
 
-namespace ZPProductManagement.Domain
+namespace ZPProductManagement.Domain.ValueObjects
 {
     public class Extension
     {
