@@ -1,0 +1,5 @@
+CREATE TABLE [dbo].[Categories] (
+    [Id] UNIQUEIDENTIFIER NOT NULL,
+    [Name] NVARCHAR(250) NOT NULL,
+    PRIMARY KEY (Id)
+)

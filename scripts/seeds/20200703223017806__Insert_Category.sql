@@ -1,0 +1,1 @@
+INSERT INTO [dbo].[Categories] ([Id], [Name]) VALUES (NEWID(), 'Shoes')

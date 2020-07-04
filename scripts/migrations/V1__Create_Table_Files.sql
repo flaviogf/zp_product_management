@@ -1,0 +1,7 @@
+CREATE TABLE [dbo].[Files] (
+    [Id] UNIQUEIDENTIFIER NOT NULL,
+    [Name] NVARCHAR(250) NOT NULL,
+    [Path] NVARCHAR(250) NOT NULL,
+    [Extension] NVARCHAR(250) NOT NULL,
+    PRIMARY KEY (Id)
+)
