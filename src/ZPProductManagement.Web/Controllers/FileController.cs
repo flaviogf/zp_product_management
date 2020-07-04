@@ -2,7 +2,7 @@
 using Microsoft.Extensions.Configuration;
 using System.IO;
 using System.Threading.Tasks;
-using ZPProductManagement.Application;
+using ZPProductManagement.Application.Files;
 using ZPProductManagement.Web.Infrastructure;
 using ZPProductManagement.Web.ViewModels;
 
@@ -35,7 +35,7 @@ namespace ZPProductManagement.Web.Controllers
 
             var file = viewModel.File;
 
-            var name = file.FileName;
+            var name = Path.GetFileNameWithoutExtension(file.FileName);
 
             var extension = Path.GetExtension(file.FileName);
 

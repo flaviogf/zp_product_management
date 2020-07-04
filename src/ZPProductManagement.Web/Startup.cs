@@ -6,6 +6,8 @@ using Microsoft.Extensions.Hosting;
 using System.Data;
 using System.Data.SqlClient;
 using ZPProductManagement.Application;
+using ZPProductManagement.Application.Files;
+using ZPProductManagement.Application.Products;
 using ZPProductManagement.Web.Infrastructure;
 
 namespace ZPProductManagement.Web
@@ -24,8 +26,11 @@ namespace ZPProductManagement.Web
             services.AddScoped<IDbConnection>((it) => new SqlConnection(_configuration.GetConnectionString("Default")));
 
             services.AddScoped<IUnitOfWork, UnitOfWork>();
+            services.AddScoped<ICategoryRepository, DapperCategoryRepository>();
             services.AddScoped<IFileRepository, DapperFileRepository>();
+            services.AddScoped<IProductRepository, DapperProductRepository>();
             services.AddScoped<CreateFileApplication>();
+            services.AddScoped<CreateProductApplication>();
 
             services.AddControllersWithViews();
         }

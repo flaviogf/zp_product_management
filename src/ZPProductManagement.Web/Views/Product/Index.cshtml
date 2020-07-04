@@ -3,10 +3,16 @@
 
 @model CreateFileViewModel
 
-<form asp-action="Create" asp-controller="File" enctype="multipart/form-data">
-    <input asp-for="Id" value="@Guid.NewGuid()" hidden />
+<main>
+    <form asp-action="Create" asp-controller="File" enctype="multipart/form-data">
+        <input asp-for="Id" value="@Guid.NewGuid()" hidden />
 
-    <input asp-for="File" />
+        <input asp-for="File" />
 
-    <button type="submit">Upload</button>
-</form>
+        <button type="submit">Upload images</button>
+    </form>
+
+    <form asp-action="Create" asp-controller="Product">
+        <button type="submit">Upload products</button>
+    </form>
+</main>
