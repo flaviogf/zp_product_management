@@ -1,4 +1,6 @@
-﻿namespace ZPProductManagement.Common
+﻿using System.Collections.Generic;
+
+namespace ZPProductManagement.Common
 {
     public class Result
     {
@@ -31,10 +33,23 @@
 
         public static Result<T> Fail<T>(string message)
         {
-            return new Result<T>(default, false, string.Empty);
+            return new Result<T>(default, false, message);
         }
 
         public static Result Combine(params Result[] results)
+        {
+            foreach (var result in results)
+            {
+                if (result.Failure)
+                {
+                    return Fail(result.Message);
+                }
+            }
+
+            return Ok();
+        }
+
+        public static Result Combine(IEnumerable<Result> results)
         {
             foreach (var result in results)
             {
