@@ -1,3 +1,4 @@
+using AutoMapper;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -5,10 +6,12 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System.Data;
 using System.Data.SqlClient;
+using System.Reflection;
 using ZPProductManagement.Application;
 using ZPProductManagement.Application.Files;
 using ZPProductManagement.Application.Products;
 using ZPProductManagement.Web.Infrastructure;
+using ZPProductManagement.Web.ViewModels;
 
 namespace ZPProductManagement.Web
 {
@@ -31,6 +34,11 @@ namespace ZPProductManagement.Web
             services.AddScoped<IProductRepository, DapperProductRepository>();
             services.AddScoped<CreateFileApplication>();
             services.AddScoped<CreateProductApplication>();
+
+            services.AddAutoMapper(it =>
+            {
+                it.CreateMap<IProductAdapter, IndexProductViewModel>();
+            }, Assembly.GetExecutingAssembly());
 
             services.AddControllersWithViews();
         }
