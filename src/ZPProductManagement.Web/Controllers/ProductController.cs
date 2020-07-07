@@ -1,10 +1,12 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using ZPProductManagement.Application;
 using ZPProductManagement.Application.Products;
 using ZPProductManagement.Common;
 using ZPProductManagement.Web.Infrastructure;
@@ -16,18 +18,24 @@ namespace ZPProductManagement.Web.Controllers
     public class ProductController : Controller
     {
         private readonly CreateProductApplication _createProductApplication;
+        private readonly IProductRepository _productRepository;
         private readonly IUnitOfWork _uow;
+        private readonly IMapper _mapper;
 
-        public ProductController(CreateProductApplication createProductApplication, IUnitOfWork uow)
+        public ProductController(CreateProductApplication createProductApplication, IProductRepository productRepository, IUnitOfWork uow, IMapper mapper)
         {
             _createProductApplication = createProductApplication;
+            _productRepository = productRepository;
             _uow = uow;
+            _mapper = mapper;
         }
 
         [HttpGet]
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View();
+            var products = _mapper.Map<IEnumerable<IndexProductViewModel>>(await _productRepository.FindAll());
+
+            return View(products);
         }
 
         [HttpPost]
@@ -121,15 +129,15 @@ namespace ZPProductManagement.Web.Controllers
                 return Result.Fail("FileNames must be informed");
             }
 
-            var productAdapter = new InputProductAdapter
+            var productAdapter = new CreateProductAdapter
             (
                 maybeId.Value,
                 maybeName.Value,
                 maybeDescription.Value,
                 maybePrice.Value,
                 maybeQuantity.Value,
-                categoryName: maybeCategoryName.Value,
-                fileNames: maybeFileNames.Value
+                maybeCategoryName.Value,
+                maybeFileNames.Value
             );
 
             var result = await _createProductApplication.Execute(productAdapter);
