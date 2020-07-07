@@ -9,16 +9,16 @@
 <main class="product">
     <h2 class="product__title">Product management</h2>
 
-    <aside>
+    <aside class="product__aside">
         <partial name="_ImportFile" model="new CreateFileViewModel()" />
 
         <partial name="_ImportProduct" model="new CreateProductViewModel()" />
     </aside>
 
-    <section class="product__content border-1 shadow-1">
-        <h3 class="product__content__title">Manage all product list</h3>
+    <section class="product__section border-1 shadow-1">
+        <h3 class="product__section__title">Manage all product list</h3>
 
-        <div class="product__content__list">
+        <div class="product__section__list">
             <table>
                 <thead>
                     <tr>
@@ -27,7 +27,7 @@
                         <th style="min-width: 200px">Description</th>
                         <th style="min-width: 75px; text-align: center">Price</th>
                         <th style="min-width: 75px; text-align: center">Active</th>
-                        <th style="min-width: 75px; text-align: right">Actions</th>
+                        <th style="min-width: 75px; text-align: center">Actions</th>
                     </tr>
                 </thead>
 
@@ -40,8 +40,8 @@
                             <td>@it.Description</td>
                             <td style="text-align: center">@it.Price</td>
                             <td style="text-align: center">Yes</td>
-                            <td style="text-align: right">
-                                <a href="#">Detalhes</a>
+                            <td style="text-align: center">
+                                <a class="product__section__list__button" href="#">Detalhes</a>
                             </td>
                         </tr>
                     }
