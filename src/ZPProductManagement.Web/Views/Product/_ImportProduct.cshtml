@@ -2,7 +2,14 @@
 
 @model CreateProductViewModel
 
-<form asp-action="Create" asp-controller="Product" enctype="multipart/form-data">
-    <input asp-for="File" accept=".csv" />
-    <button type="submit">Upload products</button>
+<form asp-action="Create" asp-controller="Product" class="product__card product__card--import-product border-1 shadow-1" enctype="multipart/form-data">
+    <h3 class="product__card__title">
+        In order to import in batch the products, download the sheet and then upload it.
+    </h3>
+
+    <label asp-for="File" class="product__card__button" data-import-products-button>
+        <i class="fa fa-file"></i>
+        Upload products
+        <input asp-for="File" accept=".csv" />
+    </label>
 </form>

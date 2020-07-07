@@ -2,7 +2,23 @@
 
 @model CreateFileViewModel
 
-<form asp-action="Create" asp-controller="File" enctype="multipart/form-data">
-    <input asp-for="Files" accept=".gif, .jpeg, .jpg, .png" />
-    <button type="submit">Upload images</button>
+<form asp-action="Create" asp-controller="File" class="product__card product__card--import-file border-1 shadow-1" enctype="multipart/form-data">
+    <h3 class="product__card__title">
+        Upload product images following the notes bellow:
+    </h3>
+
+    <ul class="product__card__list">
+        <li class="product__card__list__item">- Extensions: JPG or PNG</li>
+        <li class="product__card__list__item">- Size: Each image until 300KB</li>
+        <li class="product__card__list__item">- Total Size: until 25MB</li>
+        <li class="product__card__list__item">- Total Quantity: 250 files per upload</li>
+        <li class="product__card__list__item">- Square image: 1000px X 1000px</li>
+        <li class="product__card__list__item">- Rectangular image: 1000px X 1500px</li>
+    </ul>
+
+    <label asp-for="Files" class="product__card__button" data-import-files-button>
+        <i class="fa fa-file"></i>
+        Upload images
+        <input asp-for="Files" accept=".gif, .jpeg, .jpg, .png" />
+    </label>
 </form>

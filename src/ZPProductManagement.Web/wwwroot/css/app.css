@@ -1,0 +1,18 @@
+﻿:root {
+    --black: #111111;
+    --blue: #2B7EF6;
+    --blue-dark-1: #303E67;
+    --gray: #edf0f5;
+    --gray-dark-1: #666666;
+    --white: #ffffff;
+}
+
+* {
+    font-family: "Open Sans", sans-serif;
+}
+
+html,
+body {
+    background-color: var(--gray);
+    height: 100%;
+}

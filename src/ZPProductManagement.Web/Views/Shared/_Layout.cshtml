@@ -3,9 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>ZP Product Management</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600&display=swap" rel="stylesheet">
+    <script src="https://use.fontawesome.com/6753ec4368.js"></script>
+
+    <link href="~/lib/minireset/minireset.min.css" rel="stylesheet">
+    <link href="~/css/app.css" rel="stylesheet">
+    <link href="~/css/border.css" rel="stylesheet">
+    <link href="~/css/shadow.css" rel="stylesheet">
+
+    @RenderSection("styles", required: false)
 </head>
 <body>
     @RenderBody()
+
+    <script src="~/lib/jquery/jquery.min.js"></script>
+
+    @RenderSection("scripts", required: false)
 </body>
 </html>

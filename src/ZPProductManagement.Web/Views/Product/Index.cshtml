@@ -2,15 +2,55 @@
 
 @model IEnumerable<IndexProductViewModel>
 
-<main>
-    <partial name="_ImportFile" model="new CreateFileViewModel()"/>
+@section styles {
+    <link href="~/css/product.css" rel="stylesheet">
+}
 
-    <partial name="_ImportProduct" model="new CreateProductViewModel()" />
+<main class="product">
+    <h2 class="product__title">Product management</h2>
 
-    <ul>
-        @foreach (var it in Model)
-        {
-            <li>@it.CategoryName</li>
-        }
-    </ul>
+    <aside>
+        <partial name="_ImportFile" model="new CreateFileViewModel()" />
+
+        <partial name="_ImportProduct" model="new CreateProductViewModel()" />
+    </aside>
+
+    <section class="product__content border-1 shadow-1">
+        <h3 class="product__content__title">Manage all product list</h3>
+
+        <div class="product__content__list">
+            <table>
+                <thead>
+                    <tr>
+                        <th style="min-width: 150px">Product Name</th>
+                        <th style="min-width: 100px">Category</th>
+                        <th style="min-width: 200px">Description</th>
+                        <th style="min-width: 75px; text-align: center">Price</th>
+                        <th style="min-width: 75px; text-align: center">Active</th>
+                        <th style="min-width: 75px; text-align: right">Actions</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    @foreach (var it in Model)
+                    {
+                        <tr>
+                            <td>@it.Name</td>
+                            <td>@it.CategoryName</td>
+                            <td>@it.Description</td>
+                            <td style="text-align: center">@it.Price</td>
+                            <td style="text-align: center">Yes</td>
+                            <td style="text-align: right">
+                                <a href="#">Detalhes</a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </section>
 </main>
+
+@section scripts {
+    <script src="~/js/product.js"></script>
+}

@@ -1,0 +1,22 @@
+{
+  "version": "1.0",
+  "defaultProvider": "unpkg",
+  "libraries": [
+    {
+      "library": "minireset.css@0.0.6",
+      "destination": "wwwroot\\lib\\minireset",
+      "files": [
+        "minireset.min.css"
+      ]
+    },
+    {
+      "provider": "cdnjs",
+      "library": "jquery@3.5.1",
+      "destination": "wwwroot\\lib\\jquery",
+      "files": [
+        "jquery.min.js",
+        "jquery.min.map"
+      ]
+    }
+  ]
+}

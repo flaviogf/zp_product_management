@@ -14,6 +14,7 @@ using ZPProductManagement.Web.ViewModels;
 
 namespace ZPProductManagement.Web.Controllers
 {
+    [Route("")]
     [Route("[controller]")]
     public class ProductController : Controller
     {
