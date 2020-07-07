@@ -1,4 +1,16 @@
-﻿<main>
-    <partial name="_ImportFile" />
-    <partial name="_ImportProduct" />
+﻿@using ZPProductManagement.Web.ViewModels
+
+@model IEnumerable<IndexProductViewModel>
+
+<main>
+    <partial name="_ImportFile" model="new CreateFileViewModel()"/>
+
+    <partial name="_ImportProduct" model="new CreateProductViewModel()" />
+
+    <ul>
+        @foreach (var it in Model)
+        {
+            <li>@it.CategoryName</li>
+        }
+    </ul>
 </main>
