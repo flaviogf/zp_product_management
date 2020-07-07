@@ -1,6 +1,7 @@
 ﻿using Dapper;
 using Microsoft.Extensions.Logging;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using ZPProductManagement.Application;
@@ -48,22 +49,40 @@ namespace ZPProductManagement.Web.Infrastructure
         {
             try
             {
-                var sql = "SELECT TOP 1 * FROM [dbo].[Products] WHERE [Id] = @Id";
+                var sql = "SELECT p.[Id], p.[Name], p.[Description], p.[Price], p.[Quantity], c.[Id] [CategoryId], c.[Name] [CategoryName] FROM [dbo].[Products] p JOIN [dbo].[Categories] c ON p.[CategoryId] = c.[Id] WHERE p.Id = @Id";
 
                 var param = new
                 {
                     Id = id
                 };
 
-                var productAdapter = await _uow.Connection.QueryFirstOrDefaultAsync<InputProductAdapter>(sql, param, transaction: _uow.Transaction);
+                var product = await _uow.Connection.QueryFirstOrDefaultAsync<IndexProductAdapter>(sql, param, transaction: _uow.Transaction);
 
-                return productAdapter;
+                return product;
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex.Message, ex);
 
                 return null;
+            }
+        }
+
+        public async Task<IEnumerable<IProductAdapter>> FindAll()
+        {
+            try
+            {
+                var sql = "SELECT p.[Id], p.[Name], p.[Description], p.[Price], p.[Quantity], c.[Id] [CategoryId], c.[Name] [CategoryName] FROM [dbo].[Products] p JOIN [dbo].[Categories] c ON p.[CategoryId] = c.[Id]";
+
+                var products = await _uow.Connection.QueryAsync<IndexProductAdapter>(sql, transaction: _uow.Transaction);
+
+                return products;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+
+                return new List<IProductAdapter>();
             }
         }
     }
