@@ -1,0 +1,8 @@
+﻿@using ZPProductManagement.Web.ViewModels;
+
+@model CreateFileViewModel
+
+<form asp-action="Create" asp-controller="File" enctype="multipart/form-data">
+    <input asp-for="Files" accept=".gif, .jpeg, .jpg, .png" />
+    <button type="submit">Upload images</button>
+</form>

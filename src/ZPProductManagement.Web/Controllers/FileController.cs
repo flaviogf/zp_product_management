@@ -1,8 +1,12 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
+using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
 using ZPProductManagement.Application.Files;
+using ZPProductManagement.Common;
 using ZPProductManagement.Web.Infrastructure;
 using ZPProductManagement.Web.ViewModels;
 
@@ -26,24 +30,11 @@ namespace ZPProductManagement.Web.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([FromForm] CreateFileViewModel viewModel)
         {
-            if (!ModelState.IsValid)
-            {
-                TempData["Failure"] = "Choose at least a file";
+            var createFiles = Create(viewModel.Files);
 
-                return RedirectToAction("Index", "Product");
-            }
+            var results = await Task.WhenAll(createFiles);
 
-            var file = viewModel.File;
-
-            var name = Path.GetFileNameWithoutExtension(file.FileName);
-
-            var extension = Path.GetExtension(file.FileName);
-
-            var path = $"{Path.GetRandomFileName()}{extension}";
-
-            var fileAdapter = new InputFileAdapter(viewModel.Id, name, path, extension);
-
-            var result = await _createFileApplication.Execute(fileAdapter);
+            var result = Result.Combine(results);
 
             if (result.Failure)
             {
@@ -52,15 +43,43 @@ namespace ZPProductManagement.Web.Controllers
                 return RedirectToAction("Index", "Product");
             }
 
-            using var stream = new FileStream(Path.Combine(_configuration["Upload:Directory"], path), FileMode.Create, FileAccess.Write);
-
-            await file.CopyToAsync(stream);
-
             TempData["Success"] = "File has been created";
 
             _uow.Commit();
 
             return RedirectToAction("Index", "Product");
+        }
+
+        private IEnumerable<Task<Result>> Create(IFormFileCollection files)
+        {
+            foreach (var file in files)
+            {
+                yield return Create(file);
+            }
+        }
+
+        private async Task<Result> Create(IFormFile file)
+        {
+            var name = Path.GetFileNameWithoutExtension(file.FileName);
+
+            var extension = Path.GetExtension(file.FileName);
+
+            var path = $"{Path.GetRandomFileName()}{extension}";
+
+            var fileAdapter = new InputFileAdapter(Guid.NewGuid(), name, path, extension);
+
+            var result = await _createFileApplication.Execute(fileAdapter);
+
+            if (result.Failure)
+            {
+                return Result.Fail(result.Message);
+            }
+
+            using var stream = new FileStream(Path.Combine(_configuration["Upload:Directory"], path), FileMode.Create, FileAccess.Write);
+
+            await file.CopyToAsync(stream);
+
+            return Result.Ok();
         }
     }
 }

@@ -1,0 +1,8 @@
+﻿@using ZPProductManagement.Web.ViewModels
+
+@model CreateProductViewModel
+
+<form asp-action="Create" asp-controller="Product" enctype="multipart/form-data">
+    <input asp-for="File" accept=".csv" />
+    <button type="submit">Upload products</button>
+</form>

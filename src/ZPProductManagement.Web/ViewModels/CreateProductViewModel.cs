@@ -3,9 +3,9 @@ using System.ComponentModel.DataAnnotations;
 
 namespace ZPProductManagement.Web.ViewModels
 {
-    public class CreateFileViewModel
+    public class CreateProductViewModel
     {
         [Required]
-        public IFormFileCollection Files { get; set; }
+        public IFormFile File { get; set; }
     }
 }

@@ -6,7 +6,7 @@ namespace ZPProductManagement.Common
     {
         private readonly T _value;
 
-        public Maybe(T value)
+        private Maybe(T value)
         {
             _value = value;
         }
