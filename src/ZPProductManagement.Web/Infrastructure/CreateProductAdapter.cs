@@ -4,19 +4,17 @@ using ZPProductManagement.Application.Products;
 
 namespace ZPProductManagement.Web.Infrastructure
 {
-    public class InputProductAdapter : IProductAdapter
+    public class CreateProductAdapter : IProductAdapter
     {
-        public InputProductAdapter
+        public CreateProductAdapter
         (
             Guid id,
             string name,
             string description,
             decimal price,
             int quantity,
-            Guid? categoryId = default,
-            string categoryName = default,
-            IEnumerable<Guid> fileIds = default,
-            IEnumerable<string> fileNames = default
+            string categoryName,
+            IEnumerable<string> fileNames
         )
         {
             Id = id;
@@ -25,11 +23,8 @@ namespace ZPProductManagement.Web.Infrastructure
             Description = description;
             Price = price;
             Quantity = quantity;
-
-            CategoryId = categoryId ?? Guid.Empty;
-            CategoryName = categoryName ?? string.Empty;
-            FileIds = fileIds ?? new List<Guid>();
-            FileNames = fileNames ?? new List<string>();
+            CategoryName = categoryName;
+            FileNames = fileNames;
         }
 
         public Guid Id { get; }
