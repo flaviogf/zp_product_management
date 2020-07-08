@@ -1,6 +1,7 @@
-﻿@using ZPProductManagement.Web.ViewModels
+﻿@using ZPProductManagement.Common
+@using ZPProductManagement.Web.ViewModels
 
-@model IEnumerable<IndexProductViewModel>
+@model Pagination<IndexProductViewModel>
 
 @section styles {
     <link href="~/css/product.css" rel="stylesheet">
@@ -18,7 +19,7 @@
     <section class="product__section border-1 shadow-1">
         <h3 class="product__section__title">Manage all product list</h3>
 
-        <div class="product__section__list">
+        <main class="product__section__list">
             <table>
                 <thead>
                     <tr>
@@ -32,7 +33,7 @@
                 </thead>
 
                 <tbody>
-                    @foreach (var it in Model)
+                    @foreach (var it in Model.Content)
                     {
                         <tr>
                             <td>@it.Name</td>
@@ -47,7 +48,44 @@
                     }
                 </tbody>
             </table>
-        </div>
+        </main>
+
+        <footer class="product__section__pagination">
+            @{
+                var previousPage = Model.Page - 1;
+                var nextPage = Model.Page + 1;
+            }
+
+            @if (Model.HasPrevious)
+            {
+                <a asp-action="Index" asp-controller="Product" asp-route-page="@previousPage" class="product__section__pagination__item">Previous</a>
+            }
+            else
+            {
+                <span class="product__section__pagination__item product__section__pagination__item--disabled">Previous</span>
+            }
+
+            @if (Model.HasPrevious)
+            {
+                <a asp-action="Index" asp-controller="Product" asp-route-page="@previousPage" class="product__section__pagination__item">@previousPage</a>
+            }
+
+            <span class="product__section__pagination__item product__section__pagination__item--active">@Model.Page</span>
+
+            @if (Model.HasNext)
+            {
+                <a asp-action="Index" asp-controller="Product" asp-route-page="@nextPage" class="product__section__pagination__item">@nextPage</a>
+            }
+
+            @if (Model.HasNext)
+            {
+                <a asp-action="Index" asp-controller="Product" asp-route-page="@nextPage" class="product__section__pagination__item">Next</a>
+            }
+            else
+            {
+                <span class="product__section__pagination__item product__section__pagination__item--disabled">Next</span>
+            }
+        </footer>
     </section>
 </main>
 

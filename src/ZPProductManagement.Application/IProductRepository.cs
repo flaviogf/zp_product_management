@@ -13,5 +13,7 @@ namespace ZPProductManagement.Application
         Task<Maybe<IProductAdapter>> FindById(Guid id);
 
         Task<IEnumerable<IProductAdapter>> FindAll();
+
+        Task<Pagination<IProductAdapter>> Pagination(int page, int perPage);
     }
 }

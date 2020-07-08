@@ -32,11 +32,17 @@ namespace ZPProductManagement.Web.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index([FromQuery] int page = 1)
         {
-            var products = _mapper.Map<IEnumerable<IndexProductViewModel>>(await _productRepository.FindAll());
+            var perPage = 5;
 
-            return View(products);
+            var result = await _productRepository.Pagination(page, perPage);
+
+            var products = _mapper.Map<IEnumerable<IndexProductViewModel>>(result.Content);
+
+            var pagination = new Pagination<IndexProductViewModel>(products, result.Total, result.Page, result.Pages);
+
+            return View(pagination);
         }
 
         [HttpPost]

@@ -85,5 +85,28 @@ namespace ZPProductManagement.Web.Infrastructure
                 return new List<IProductAdapter>();
             }
         }
+
+        public async Task<Pagination<IProductAdapter>> Pagination(int page, int perPage)
+        {
+            var countProducts = "SELECT COUNT(*) FROM [dbo].[Products]";
+
+            var total = await _uow.Connection.QueryFirstOrDefaultAsync<int>(countProducts, transaction: _uow.Transaction);
+
+            var selectProducts = "SELECT p.[Id], p.[Name], p.[Description], p.[Price], p.[Quantity], c.[Id] [CategoryId], c.[Name] [CategoryName] FROM [dbo].[Products] p JOIN [dbo].[Categories] c ON p.[CategoryId] = c.[Id] ORDER BY p.[Name] OFFSET @Skip ROWS FETCH NEXT @Take ROWS ONLY";
+
+            var param = new
+            {
+                Skip = (page - 1) * perPage,
+                Take = perPage
+            };
+
+            var content = await _uow.Connection.QueryAsync<IndexProductAdapter>(selectProducts, param: param, transaction: _uow.Transaction);
+
+            var pages = total / (double)perPage;
+
+            var pagination = new Pagination<IProductAdapter>(content, total, page, (int)Math.Ceiling(pages));
+
+            return pagination;
+        }
     }
 }
