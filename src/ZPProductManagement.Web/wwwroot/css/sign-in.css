@@ -1,0 +1,98 @@
+﻿.sign-in {
+    align-items: center;
+    background: linear-gradient(to right, var(--blue-light-1), var(--purple));
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    padding: 16px;
+}
+
+.sign-in__form {
+    background-color: var(--white);
+    display: flex;
+    flex-direction: column;
+    padding: 16px;
+    margin: 0 auto;
+    max-width: 425px;
+    width: 100%;
+}
+
+.sign-in__title {
+    font-size: 24px;
+    text-align: center;
+}
+
+.sign-in__fieldset {
+    border: none;
+    margin-top: 16px;
+    position: relative;
+}
+
+.sign-in__label {
+    display: block;
+    width: 100%;
+}
+
+.sign-in__icon {
+    color: var(--blue-light-1);
+    cursor: pointer;
+    font-size: 18px;
+    left: 24px;
+    position: absolute;
+    top: 12px;
+}
+
+.sign-in__icon--mail {
+}
+
+.sign-in__icon--pass {
+    font-size: 22px;
+    left: 26px;
+    top: 10px;
+}
+
+.sign-in__input {
+    border: 1px solid rgba(0,0,0,0.1);
+    border-radius: 115px;
+    height: 40px;
+    line-height: 40px;
+    outline: none;
+    padding: 16px;
+    width: 100%;
+}
+
+.sign-in__input--icon {
+    padding: 16px 16px 16px 50px;
+    position: relative;
+}
+
+.sign-in__input + .sign-in__input {
+    margin-top: 16px;
+}
+
+.sign-in__link {
+    color: var(--gray-dark-3);
+    cursor: pointer;
+    font-size: 14px;
+    text-align: right;
+    text-decoration: none;
+    margin-top: 16px;
+}
+
+.sign-in__button {
+    background-color: var(--blue);
+    border: none;
+    border-radius: 115px;
+    color: var(--white);
+    cursor: pointer;
+    height: 45px;
+    margin-top: 64px;
+    text-transform: uppercase;
+    width: 100%;
+}
+
+@media screen and (min-width: 768px) {
+    .sign-in__form {
+        padding: 48px;
+    }
+}

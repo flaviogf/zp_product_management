@@ -1,3 +1,7 @@
 ﻿.border-1 {
     border-radius: 2px;
 }
+
+.border-2 {
+    border-radius: 5px;
+}
