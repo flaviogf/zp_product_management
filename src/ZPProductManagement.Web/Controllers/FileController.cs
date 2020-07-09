@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using System;
@@ -12,6 +13,7 @@ using ZPProductManagement.Web.ViewModels;
 
 namespace ZPProductManagement.Web.Controllers
 {
+    [Authorize]
     [Route("[controller]")]
     public class FileController : Controller
     {

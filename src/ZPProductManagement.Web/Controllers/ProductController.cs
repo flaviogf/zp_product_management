@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -14,6 +15,7 @@ using ZPProductManagement.Web.ViewModels;
 
 namespace ZPProductManagement.Web.Controllers
 {
+    [Authorize]
     [Route("")]
     [Route("[controller]")]
     public class ProductController : Controller
@@ -34,9 +36,7 @@ namespace ZPProductManagement.Web.Controllers
         [HttpGet]
         public async Task<IActionResult> Index([FromQuery] int page = 1)
         {
-            var perPage = 5;
-
-            var result = await _productRepository.Pagination(page, perPage);
+            var result = await _productRepository.Pagination(page, perPage: 5);
 
             var products = _mapper.Map<IEnumerable<IndexProductViewModel>>(result.Content);
 
