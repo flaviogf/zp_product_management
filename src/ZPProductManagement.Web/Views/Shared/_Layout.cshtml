@@ -13,6 +13,7 @@
     <link href="~/css/app.css" rel="stylesheet">
     <link href="~/css/border.css" rel="stylesheet">
     <link href="~/css/shadow.css" rel="stylesheet">
+    <link href="~/css/navbar.css" rel="stylesheet">
 
     @RenderSection("styles", required: false)
 </head>
@@ -20,6 +21,9 @@
     @RenderBody()
 
     <script src="~/lib/jquery/jquery.min.js"></script>
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
+    <script src="~/js/navbar.js"></script>
 
     @RenderSection("scripts", required: false)
 </body>

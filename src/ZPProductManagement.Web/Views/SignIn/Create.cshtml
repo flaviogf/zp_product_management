@@ -1,0 +1,31 @@
+﻿@using ZPProductManagement.Web.ViewModels
+
+@model CreateSignInViewModel
+
+@section styles {
+    <link href="~/css/sign-in.css" rel="stylesheet">
+}
+
+<main class="sign-in">
+    <form asp-action="Create" asp-controller="SignIn" class="sign-in__form border-2">
+        <h1 class="sign-in__title">Welcome, <small>sign in to start</small></h1>
+
+        <fieldset class="sign-in__fieldset">
+            <label asp-for="Email" class="sign-in__label">
+                <input asp-for="Email" class="sign-in__input sign-in__input--icon" placeholder="email@email.com.br" aria-label="Enter your email" />
+                <i class="sign-in__icon sign-in__icon--mail fa fa-envelope"></i>
+            </label>
+        </fieldset>
+
+        <fieldset class="sign-in__fieldset">
+            <label asp-for="Password" class="sign-in__label">
+                <input asp-for="Password" class="sign-in__input sign-in__input--icon" placeholder="******" aria-label="Enter your password" />
+                <i class="sign-in__icon sign-in__icon--pass fa fa-lock"></i>
+            </label>
+        </fieldset>
+
+        <a class="sign-in__link" href="#">Did you forget your password?</a>
+
+        <button class="sign-in__button" type="submit">Sign in</button>
+    </form>
+</main>

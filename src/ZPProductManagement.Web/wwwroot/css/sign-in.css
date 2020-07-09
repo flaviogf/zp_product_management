@@ -61,6 +61,14 @@
     width: 100%;
 }
 
+    .sign-in__input::placeholder {
+        color: var(--gray-dark-3);
+    }
+
+    .sign-in__input.input-validation-error {
+        border: 1px solid var(--red);
+    }
+
 .sign-in__input--icon {
     padding: 16px 16px 16px 50px;
     position: relative;
