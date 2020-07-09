@@ -17,13 +17,13 @@ namespace ZPProductManagement.Web.Controllers
     [Route("[controller]")]
     public class FileController : Controller
     {
-        private readonly CreateFileApplication _createFileApplication;
+        private readonly CreateFile _createFile;
         private readonly IUnitOfWork _uow;
         private readonly IConfiguration _configuration;
 
-        public FileController(CreateFileApplication createFileApplication, IUnitOfWork uow, IConfiguration configuration)
+        public FileController(CreateFile createFileApplication, IUnitOfWork uow, IConfiguration configuration)
         {
-            _createFileApplication = createFileApplication;
+            _createFile = createFileApplication;
             _uow = uow;
             _configuration = configuration;
         }
@@ -70,7 +70,7 @@ namespace ZPProductManagement.Web.Controllers
 
             var fileAdapter = new InputFileAdapter(Guid.NewGuid(), name, path, extension);
 
-            var result = await _createFileApplication.Execute(fileAdapter);
+            var result = await _createFile.Execute(fileAdapter);
 
             if (result.Failure)
             {

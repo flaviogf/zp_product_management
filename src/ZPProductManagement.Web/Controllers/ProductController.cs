@@ -20,14 +20,14 @@ namespace ZPProductManagement.Web.Controllers
     [Route("[controller]")]
     public class ProductController : Controller
     {
-        private readonly CreateProductApplication _createProductApplication;
+        private readonly CreateProduct _createProduct;
         private readonly IProductRepository _productRepository;
         private readonly IUnitOfWork _uow;
         private readonly IMapper _mapper;
 
-        public ProductController(CreateProductApplication createProductApplication, IProductRepository productRepository, IUnitOfWork uow, IMapper mapper)
+        public ProductController(CreateProduct createProduct, IProductRepository productRepository, IUnitOfWork uow, IMapper mapper)
         {
-            _createProductApplication = createProductApplication;
+            _createProduct = createProduct;
             _productRepository = productRepository;
             _uow = uow;
             _mapper = mapper;
@@ -147,7 +147,7 @@ namespace ZPProductManagement.Web.Controllers
                 maybeFileNames.Value
             );
 
-            var result = await _createProductApplication.Execute(productAdapter);
+            var result = await _createProduct.Execute(productAdapter);
 
             return result;
         }

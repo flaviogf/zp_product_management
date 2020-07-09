@@ -5,11 +5,11 @@ using ZPProductManagement.Domain.ValueObjects;
 
 namespace ZPProductManagement.Application.Files
 {
-    public class CreateFileApplication
+    public class CreateFile
     {
         private readonly IFileRepository _fileRepository;
 
-        public CreateFileApplication(IFileRepository fileRepository)
+        public CreateFile(IFileRepository fileRepository)
         {
             _fileRepository = fileRepository;
         }

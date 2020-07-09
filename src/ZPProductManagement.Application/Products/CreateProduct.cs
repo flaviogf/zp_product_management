@@ -7,13 +7,13 @@ using ZPProductManagement.Domain.ValueObjects;
 
 namespace ZPProductManagement.Application.Products
 {
-    public class CreateProductApplication
+    public class CreateProduct
     {
         private readonly ICategoryRepository _categoryRepository;
         private readonly IFileRepository _fileRepository;
         private readonly IProductRepository _productRepository;
 
-        public CreateProductApplication(ICategoryRepository categoryRepository, IFileRepository fileRepository, IProductRepository productRepository)
+        public CreateProduct(ICategoryRepository categoryRepository, IFileRepository fileRepository, IProductRepository productRepository)
         {
             _categoryRepository = categoryRepository;
             _fileRepository = fileRepository;
