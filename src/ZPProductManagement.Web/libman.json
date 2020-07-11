@@ -32,6 +32,14 @@
       "files": [
         "jquery.validate.unobtrusive.js"
       ]
+    },
+    {
+      "library": "swiper@6.0.2",
+      "destination": "wwwroot\\lib\\swiper",
+      "files": [
+        "swiper-bundle.min.js",
+        "swiper-bundle.min.css"
+      ]
     }
   ]
 }
