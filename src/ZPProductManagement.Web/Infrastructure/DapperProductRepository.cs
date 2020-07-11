@@ -29,9 +29,9 @@ namespace ZPProductManagement.Web.Infrastructure
 
                 await _uow.Connection.ExecuteAsync(insertProduct, productAdapter, transaction: _uow.Transaction);
 
-                var insertFiles = "INSERT INTO [dbo].[ProductFiles] ([ProductId], [FileId]) VALUES (@ProductId, @FileId)";
+                var insertFile = "INSERT INTO [dbo].[ProductFiles] ([ProductId], [FileId]) VALUES (@ProductId, @FileId)";
 
-                var tasks = productAdapter.FileIds.Select(it => _uow.Connection.ExecuteAsync(insertFiles, new { ProductId = productAdapter.Id, FileId = it }, transaction: _uow.Transaction));
+                var tasks = productAdapter.FileIds.Select(it => _uow.Connection.ExecuteAsync(insertFile, new { ProductId = productAdapter.Id, FileId = it }, transaction: _uow.Transaction));
 
                 await Task.WhenAll(tasks);
 
@@ -49,16 +49,25 @@ namespace ZPProductManagement.Web.Infrastructure
         {
             try
             {
-                var sql = "SELECT p.[Id], p.[Name], p.[Description], p.[Price], p.[Quantity], c.[Id] [CategoryId], c.[Name] [CategoryName] FROM [dbo].[Products] p JOIN [dbo].[Categories] c ON p.[CategoryId] = c.[Id] WHERE p.Id = @Id";
+                var selectProduct = "SELECT TOP 1 p.[Id], p.[Name], p.[Description], p.[Price], p.[Quantity], c.[Id] [CategoryId], c.[Name] [CategoryName] FROM [dbo].[Products] p JOIN [dbo].[Categories] c ON p.[CategoryId] = c.[Id] WHERE p.Id = @Id";
 
-                var param = new
+                var selectProductParam = new
                 {
                     Id = id
                 };
 
-                var product = await _uow.Connection.QueryFirstOrDefaultAsync<IndexProductAdapter>(sql, param, transaction: _uow.Transaction);
+                var product = await _uow.Connection.QueryFirstOrDefaultAsync<IndexProductAdapter>(selectProduct, param: selectProductParam, transaction: _uow.Transaction);
 
-                return product;
+                var selectFiles = "SELECT f.[Id], f.[Name], f.[Path], f.[Extension] FROM ProductFiles pf JOIN Files f ON pf.[FileId] = f.[Id] WHERE pf.[ProductId] = @ProductId";
+
+                var selectFilesParam = new
+                {
+                    ProductId = product.Id
+                };
+
+                var files = await _uow.Connection.QueryAsync<InputFileAdapter>(selectFiles, param: selectFilesParam, transaction: _uow.Transaction);
+
+                return new ShowProductAdapter(product.Id, product.Name, product.Description, product.Price, product.Quantity, product.CategoryId, product.CategoryName, files);
             }
             catch (Exception ex)
             {
@@ -72,9 +81,9 @@ namespace ZPProductManagement.Web.Infrastructure
         {
             try
             {
-                var sql = "SELECT p.[Id], p.[Name], p.[Description], p.[Price], p.[Quantity], c.[Id] [CategoryId], c.[Name] [CategoryName] FROM [dbo].[Products] p JOIN [dbo].[Categories] c ON p.[CategoryId] = c.[Id]";
+                var selectProducts = "SELECT p.[Id], p.[Name], p.[Description], p.[Price], p.[Quantity], c.[Id] [CategoryId], c.[Name] [CategoryName] FROM [dbo].[Products] p JOIN [dbo].[Categories] c ON p.[CategoryId] = c.[Id]";
 
-                var products = await _uow.Connection.QueryAsync<IndexProductAdapter>(sql, transaction: _uow.Transaction);
+                var products = await _uow.Connection.QueryAsync<IndexProductAdapter>(selectProducts, transaction: _uow.Transaction);
 
                 return products;
             }
