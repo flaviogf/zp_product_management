@@ -56,7 +56,14 @@ namespace ZPProductManagement.Web.Infrastructure
                     Id = id
                 };
 
-                var product = await _uow.Connection.QueryFirstOrDefaultAsync<IndexProductAdapter>(selectProduct, param: selectProductParam, transaction: _uow.Transaction);
+                Maybe<IndexProductAdapter> maybeProduct = await _uow.Connection.QueryFirstOrDefaultAsync<IndexProductAdapter>(selectProduct, param: selectProductParam, transaction: _uow.Transaction);
+
+                if (maybeProduct.HasNoValue)
+                {
+                    return null;
+                }
+
+                var product = maybeProduct.Value;
 
                 var selectFiles = "SELECT f.[Id], f.[Name], f.[Path], f.[Extension] FROM ProductFiles pf JOIN Files f ON pf.[FileId] = f.[Id] WHERE pf.[ProductId] = @ProductId";
 
