@@ -1,0 +1,51 @@
+﻿@using ZPProductManagement.Web.ViewModels
+
+@model ShowProductViewModel
+
+@section styles {
+    <link href="~/css/product-detail.css" rel="stylesheet">
+}
+
+<partial name="_Navbar" />
+
+<main class="product-detail">
+    <h2 class="product-detail__title">
+        <a asp-action="Index" asp-controller="Product"><i class="fa fa-angle-left"></i></a>Product management
+    </h2>
+
+    <section class="product-detail__content border-1 shadow-1">
+        <div class="product-detail__slide swiper-container">
+            <div class="swiper-wrapper">
+                @foreach (var it in Model.Files)
+                {
+                    <div class="swiper-slide">
+                        <img class="product-detail__image" src="@it.Path">
+                    </div>
+                }
+            </div>
+
+            <div class="swiper-button-next"></div>
+            <div class="swiper-button-prev"></div>
+        </div>
+
+        <div class="product-detail__info">
+            <span class="product-detail__info__quantity">Available: @Model.Quantity</span>
+            <h1 class="product-detail__info__title">@Model.Name</h1>
+            <p class="product-detail__info__price">@Model.Price.ToString("C")</p>
+            <p class="product-detail__info__description">@Model.Description</p>
+
+            <hr class="product-detail__separation">
+
+            <form>
+                <button class="product-detail__info__delete">
+                    <i class="fa fa-trash"></i>Delete
+                </button>
+            </form>
+        </div>
+    </section>
+
+</main>
+
+@section scripts {
+    <script src="~/js/product-detail.js"></script>
+}

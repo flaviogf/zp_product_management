@@ -16,7 +16,6 @@ using ZPProductManagement.Web.ViewModels;
 namespace ZPProductManagement.Web.Controllers
 {
     [Authorize]
-    [Route("")]
     [Route("[controller]")]
     public class ProductController : Controller
     {
@@ -67,6 +66,22 @@ namespace ZPProductManagement.Web.Controllers
             _uow.Commit();
 
             return RedirectToAction("Index", "Product");
+        }
+
+        [HttpGet]
+        [Route("{id}")]
+        public async Task<IActionResult> Show([FromRoute] Guid id)
+        {
+            var maybeProduct = await _productRepository.FindById(id);
+
+            if (maybeProduct.HasNoValue)
+            {
+                return RedirectToAction("Index", "Product");
+            }
+
+            var product = _mapper.Map<ShowProductViewModel>(maybeProduct.Value);
+
+            return View(product);
         }
 
         private IEnumerable<Task<Result>> Create(IFormFile file)

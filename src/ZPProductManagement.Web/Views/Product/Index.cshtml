@@ -44,7 +44,7 @@
                             <td style="text-align: center">@it.Price.ToString("C")</td>
                             <td style="text-align: center">Yes</td>
                             <td style="text-align: center">
-                                <a class="product__section__list__button" href="#">Detalhes</a>
+                                <a asp-action="Show" asp-controller="Product" asp-route-id="@it.Id" class="product__section__list__button">Detalhes</a>
                             </td>
                         </tr>
                     }

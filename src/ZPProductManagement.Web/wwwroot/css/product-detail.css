@@ -1,0 +1,111 @@
+﻿.product-detail {
+    margin: 16px auto 0 auto;
+    max-width: 1440px;
+    padding: 16px;
+    width: 100%;
+}
+
+.product-detail__title {
+    color: var(--blue-dark-1);
+    font-size: 24px;
+    font-weight: 600;
+}
+
+    .product-detail__title i {
+        margin-right: 16px;
+    }
+
+.product-detail__content {
+    background-color: var(--white);
+    margin-top: 16px;
+    padding: 16px;
+}
+
+.product-detail__slide {
+    margin-left: unset;
+    margin-right: unset;
+    max-height: 320px;
+}
+
+.product-detail__image {
+    object-fit: cover;
+    object-position: center;
+    width: 100%;
+}
+
+.product-detail__info {
+}
+
+.product-detail__info__quantity {
+    font-size: 12px;
+    font-weight: 300;
+}
+
+.product-detail__info__title {
+    font-size: 18px;
+    font-weight: 600;
+    margin-top: 8px;
+}
+
+.product-detail__info__price {
+    font-size: 36px;
+    font-weight: 600;
+    margin-top: 8px;
+}
+
+.product-detail__info__description {
+    margin-top: 8px;
+}
+
+.product-detail__separation {
+    border: 1px solid rgba(0,0,0,0.1);
+    margin: 8px 0;
+}
+
+.product-detail__info__delete {
+    background-color: var(--red);
+    border: none;
+    border-radius: 100px;
+    color: var(--white);
+    display: block;
+    font-size: 12px;
+    font-weight: 900;
+    margin-top: 8px;
+    padding: 6px 16px;
+    text-decoration: none;
+    text-transform: uppercase
+}
+
+    .product-detail__info__delete i {
+        font-size: 15px;
+        margin-right: 12px;
+    }
+
+@media screen and (min-width: 768px) {
+    .product-detail__content {
+        display: grid;
+        grid-gap: 16px;
+        grid-template-areas: 'slide info';
+        grid-template-columns: 320px 1fr;
+        grid-template-rows: auto;
+    }
+
+    .product-detail__slide {
+        grid-area: slide;
+    }
+
+    .product-detail__info {
+        grid-area: info;
+    }
+}
+
+@media screen and (min-width: 1024px) {
+    .product-detail__content {
+        grid-gap: 64px;
+        grid-template-columns: 480px 1fr;
+    }
+
+    .product-detail__slide {
+        max-height: 480px;
+    }
+}
