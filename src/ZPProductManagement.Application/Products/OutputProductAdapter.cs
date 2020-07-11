@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using ZPProductManagement.Application.Files;
 using ZPProductManagement.Domain.Entities;
 
 namespace ZPProductManagement.Application.Products
@@ -31,5 +32,7 @@ namespace ZPProductManagement.Application.Products
         public IEnumerable<Guid> FileIds => _product.Files.Select(it => (Guid)it.Id);
 
         public IEnumerable<string> FileNames => _product.Files.Select(it => (string)it.Name);
+
+        public IEnumerable<IFileAdapter> Files => throw new NotImplementedException();
     }
 }

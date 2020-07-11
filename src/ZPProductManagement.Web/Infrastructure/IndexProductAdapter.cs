@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using ZPProductManagement.Application.Files;
 using ZPProductManagement.Application.Products;
 
 namespace ZPProductManagement.Web.Infrastructure
@@ -18,7 +19,6 @@ namespace ZPProductManagement.Web.Infrastructure
         )
         {
             Id = id;
-            CategoryId = Guid.Empty;
             Name = name;
             Description = description;
             Price = price;
@@ -41,8 +41,10 @@ namespace ZPProductManagement.Web.Infrastructure
 
         public string CategoryName { get; }
 
-        public IEnumerable<Guid> FileIds { get; }
+        public IEnumerable<Guid> FileIds => throw new NotImplementedException();
 
-        public IEnumerable<string> FileNames { get; }
+        public IEnumerable<string> FileNames => throw new NotImplementedException();
+
+        public IEnumerable<IFileAdapter> Files => throw new NotImplementedException();
     }
 }

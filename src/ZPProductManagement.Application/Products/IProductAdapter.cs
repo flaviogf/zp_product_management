@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using ZPProductManagement.Application.Files;
 
 namespace ZPProductManagement.Application.Products
 {
@@ -22,5 +23,7 @@ namespace ZPProductManagement.Application.Products
         IEnumerable<Guid> FileIds { get; }
 
         IEnumerable<string> FileNames { get; }
+
+        IEnumerable<IFileAdapter> Files { get; }
     }
 }

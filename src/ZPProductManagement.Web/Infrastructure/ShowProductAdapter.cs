@@ -5,17 +5,18 @@ using ZPProductManagement.Application.Products;
 
 namespace ZPProductManagement.Web.Infrastructure
 {
-    public class CreateProductAdapter : IProductAdapter
+    public class ShowProductAdapter : IProductAdapter
     {
-        public CreateProductAdapter
+        public ShowProductAdapter
         (
             Guid id,
             string name,
             string description,
             decimal price,
             int quantity,
+            Guid categoryId,
             string categoryName,
-            IEnumerable<string> fileNames
+            IEnumerable<IFileAdapter> files
         )
         {
             Id = id;
@@ -23,8 +24,9 @@ namespace ZPProductManagement.Web.Infrastructure
             Description = description;
             Price = price;
             Quantity = quantity;
+            CategoryId = categoryId;
             CategoryName = categoryName;
-            FileNames = fileNames;
+            Files = files;
         }
 
         public Guid Id { get; }
@@ -37,14 +39,14 @@ namespace ZPProductManagement.Web.Infrastructure
 
         public int Quantity { get; }
 
-        public Guid CategoryId => throw new NotImplementedException();
+        public Guid CategoryId { get; }
 
         public string CategoryName { get; }
 
         public IEnumerable<Guid> FileIds => throw new NotImplementedException();
 
-        public IEnumerable<string> FileNames { get; }
+        public IEnumerable<string> FileNames => throw new NotImplementedException();
 
-        public IEnumerable<IFileAdapter> Files => throw new NotImplementedException();
+        public IEnumerable<IFileAdapter> Files { get; }
     }
 }
