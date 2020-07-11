@@ -40,7 +40,13 @@ namespace ZPProductManagement.Web
 
             services.AddAutoMapper(it =>
             {
+                it.CreateMap<IFileAdapter, ShowFileViewModel>().AfterMap((src, dest) =>
+                {
+                    dest.Path = $"{_configuration.GetValue<string>("Upload:Url")}/{src.Path}";
+                });
+
                 it.CreateMap<IProductAdapter, IndexProductViewModel>();
+                it.CreateMap<IProductAdapter, ShowProductViewModel>();
             }, Assembly.GetExecutingAssembly());
 
             services.AddDbContext<ApplicationDbContext>(it => it.UseSqlite(_configuration.GetConnectionString("Identity")));
