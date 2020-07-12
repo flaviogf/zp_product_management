@@ -41,13 +41,6 @@ namespace ZPProductManagement.Application.Products
 
         private async Task<Result<Product>> GetProductOrError(IProductAdapter productAdapter)
         {
-            var maybeProduct = await _productRepository.FindById(productAdapter.Id);
-
-            if (maybeProduct.HasValue)
-            {
-                return Result.Fail<Product>("ProductId is already taken");
-            }
-
             var categoryOrError = await GetCategoryOrError(productAdapter.CategoryName);
 
             var filesOrError = await GetFilesOrErrors(productAdapter.FileNames);
