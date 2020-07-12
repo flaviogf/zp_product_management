@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using ZPProductManagement.Application.Files;
 using ZPProductManagement.Application.Products;
+using ZPProductManagement.Common.Enums;
 
 namespace ZPProductManagement.Web.Infrastructure
 {
@@ -15,7 +16,8 @@ namespace ZPProductManagement.Web.Infrastructure
             decimal price,
             int quantity,
             Guid categoryId,
-            string categoryName
+            string categoryName,
+            EStatus status
         )
         {
             Id = id;
@@ -25,6 +27,7 @@ namespace ZPProductManagement.Web.Infrastructure
             Quantity = quantity;
             CategoryId = categoryId;
             CategoryName = categoryName;
+            Status = status;
         }
 
         public Guid Id { get; }
@@ -46,5 +49,7 @@ namespace ZPProductManagement.Web.Infrastructure
         public IEnumerable<string> FileNames => throw new NotImplementedException();
 
         public IEnumerable<IFileAdapter> Files => throw new NotImplementedException();
+
+        public EStatus Status { get; }
     }
 }

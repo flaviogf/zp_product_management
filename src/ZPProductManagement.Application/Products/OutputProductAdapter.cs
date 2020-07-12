@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using ZPProductManagement.Application.Files;
+using ZPProductManagement.Common.Enums;
 using ZPProductManagement.Domain.Entities;
 
 namespace ZPProductManagement.Application.Products
@@ -34,5 +35,7 @@ namespace ZPProductManagement.Application.Products
         public IEnumerable<string> FileNames => _product.Files.Select(it => (string)it.Name);
 
         public IEnumerable<IFileAdapter> Files => throw new NotImplementedException();
+
+        public EStatus Status => _product.Status;
     }
 }

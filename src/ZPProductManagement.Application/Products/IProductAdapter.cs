@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using ZPProductManagement.Application.Files;
+using ZPProductManagement.Common.Enums;
 
 namespace ZPProductManagement.Application.Products
 {
@@ -25,5 +26,7 @@ namespace ZPProductManagement.Application.Products
         IEnumerable<string> FileNames { get; }
 
         IEnumerable<IFileAdapter> Files { get; }
+
+        EStatus Status { get; }
     }
 }

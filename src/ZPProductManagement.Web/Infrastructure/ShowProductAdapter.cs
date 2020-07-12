@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using ZPProductManagement.Application.Files;
 using ZPProductManagement.Application.Products;
+using ZPProductManagement.Common.Enums;
 
 namespace ZPProductManagement.Web.Infrastructure
 {
@@ -16,7 +18,8 @@ namespace ZPProductManagement.Web.Infrastructure
             int quantity,
             Guid categoryId,
             string categoryName,
-            IEnumerable<IFileAdapter> files
+            IEnumerable<IFileAdapter> files,
+            EStatus status
         )
         {
             Id = id;
@@ -27,6 +30,7 @@ namespace ZPProductManagement.Web.Infrastructure
             CategoryId = categoryId;
             CategoryName = categoryName;
             Files = files;
+            Status = status;
         }
 
         public Guid Id { get; }
@@ -43,10 +47,12 @@ namespace ZPProductManagement.Web.Infrastructure
 
         public string CategoryName { get; }
 
-        public IEnumerable<Guid> FileIds => throw new NotImplementedException();
+        public IEnumerable<Guid> FileIds => Files.Select(it => it.Id);
 
-        public IEnumerable<string> FileNames => throw new NotImplementedException();
+        public IEnumerable<string> FileNames => Files.Select(it => it.Name);
 
         public IEnumerable<IFileAdapter> Files { get; }
+
+        public EStatus Status { get; }
     }
 }
