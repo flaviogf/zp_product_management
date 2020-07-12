@@ -20,5 +20,7 @@ namespace ZPProductManagement.Web.ViewModels
         public string CategoryName { get; set; }
 
         public IEnumerable<ShowFileViewModel> Files { get; set; }
+
+        public string Status { get; set; }
     }
 }

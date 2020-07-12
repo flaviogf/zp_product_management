@@ -13,5 +13,7 @@ namespace ZPProductManagement.Web.ViewModels
         public decimal Price { get; set; }
 
         public string CategoryName { get; set; }
+
+        public string Status { get; set; }
     }
 }
