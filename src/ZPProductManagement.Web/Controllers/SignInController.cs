@@ -30,7 +30,7 @@ namespace ZPProductManagement.Web.Controllers
 
             if (!result.Succeeded)
             {
-                ModelState.AddModelError(string.Empty, "Wrong email or password");
+                TempData["Failure"] = "Wrong email or password";
 
                 return View(viewModel);
             }
