@@ -6,6 +6,8 @@
     <link href="~/css/product-detail.css" rel="stylesheet">
 }
 
+<partial name="_Alert" />
+
 <partial name="_Navbar" />
 
 <main class="product-detail">
@@ -36,11 +38,31 @@
 
             <hr class="product-detail__separation">
 
-            <form>
-                <button class="product-detail__info__delete">
-                    <i class="fa fa-trash"></i>Delete
-                </button>
-            </form>
+            <footer class="product-detail__actions">
+                <form asp-action="Delete" asp-controller="Product">
+                    <input asp-for="Id" hidden />
+
+                    <button class="product-detail__info__button product-detail__info__button--active">
+                        <i class="fa fa-check"></i>Active
+                    </button>
+                </form>
+
+                <form asp-action="Delete" asp-controller="Product">
+                    <input asp-for="Id" hidden />
+
+                    <button class="product-detail__info__button product-detail__info__button--archive">
+                        <i class="fa fa-archive"></i>Archive
+                    </button>
+                </form>
+
+                <form asp-action="Delete" asp-controller="Product">
+                    <input asp-for="Id" hidden />
+
+                    <button class="product-detail__info__button product-detail__info__button--delete">
+                        <i class="fa fa-trash"></i>Delete
+                    </button>
+                </form>
+            </footer>
         </div>
     </section>
 

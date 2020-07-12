@@ -62,24 +62,41 @@
     margin: 8px 0;
 }
 
-.product-detail__info__delete {
-    background-color: var(--red);
+.product-detail__actions {
+    display: flex;
+}
+
+.product-detail__info__button {
     border: none;
     border-radius: 100px;
     color: var(--white);
+    cursor: pointer;
     display: block;
     font-size: 12px;
     font-weight: 900;
-    margin-top: 8px;
+    margin: 8px 8px 0 0;
+    outline: none;
     padding: 6px 16px;
     text-decoration: none;
     text-transform: uppercase
 }
 
-    .product-detail__info__delete i {
+    .product-detail__info__button i {
         font-size: 15px;
         margin-right: 12px;
     }
+
+.product-detail__info__button--active {
+    background-color: var(--green);
+}
+
+.product-detail__info__button--archive {
+    background-color: var(--orange);
+}
+
+.product-detail__info__button--delete {
+    background-color: var(--red);
+}
 
 @media screen and (min-width: 768px) {
     .product-detail__content {
