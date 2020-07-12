@@ -7,6 +7,8 @@
     <link href="~/css/product.css" rel="stylesheet">
 }
 
+<partial name="_Alert" />
+
 <partial name="_Navbar" />
 
 <main class="product">
@@ -29,7 +31,7 @@
                         <th style="min-width: 100px">Category</th>
                         <th style="min-width: 200px">Description</th>
                         <th style="min-width: 75px; text-align: center">Price</th>
-                        <th style="min-width: 75px; text-align: center">Active</th>
+                        <th style="min-width: 75px; text-align: center">Status</th>
                         <th style="min-width: 75px; text-align: center">Actions</th>
                     </tr>
                 </thead>
@@ -42,7 +44,7 @@
                             <td>@it.CategoryName</td>
                             <td>@it.Description</td>
                             <td style="text-align: center">@it.Price.ToString("C")</td>
-                            <td style="text-align: center">Yes</td>
+                            <td style="text-align: center">@it.Status</td>
                             <td style="text-align: center">
                                 <a asp-action="Show" asp-controller="Product" asp-route-id="@it.Id" class="product__section__list__button">Detalhes</a>
                             </td>
