@@ -3,10 +3,14 @@
 
 @inject UserManager<ApplicationUser> UserManager
 
+@{
+    var userName = UserManager.GetUserName(User);
+}
+
 <nav class="navbar shadow-1">
     <div class="navbar__container">
-        <span class="navbar__user">@UserManager.GetUserName(User)</span>
-        <button class="navbar__avatar" data-navbar-avatar>@UserManager.GetUserName(User)[0]</button>
+        <span class="navbar__user">@userName</span>
+        <button class="navbar__avatar" data-navbar-avatar>@userName[0]</button>
         <form asp-action="Destroy" asp-controller="SignOut">
             <button class="navbar__sign-out" type="submit" data-navbar-sign-out>
                 <i class="fa fa-sign-out"></i> Sign out
