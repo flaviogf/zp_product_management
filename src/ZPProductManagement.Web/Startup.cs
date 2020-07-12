@@ -37,6 +37,7 @@ namespace ZPProductManagement.Web
             services.AddScoped<IProductRepository, DapperProductRepository>();
             services.AddScoped<CreateFile>();
             services.AddScoped<CreateProduct>();
+            services.AddScoped<DeleteProduct>();
 
             services.AddAutoMapper(it =>
             {

@@ -20,13 +20,15 @@ namespace ZPProductManagement.Web.Controllers
     public class ProductController : Controller
     {
         private readonly CreateProduct _createProduct;
+        private readonly DeleteProduct _deleteProduct;
         private readonly IProductRepository _productRepository;
         private readonly IUnitOfWork _uow;
         private readonly IMapper _mapper;
 
-        public ProductController(CreateProduct createProduct, IProductRepository productRepository, IUnitOfWork uow, IMapper mapper)
+        public ProductController(CreateProduct createProduct, DeleteProduct deleteProduct, IProductRepository productRepository, IUnitOfWork uow, IMapper mapper)
         {
             _createProduct = createProduct;
+            _deleteProduct = deleteProduct;
             _productRepository = productRepository;
             _uow = uow;
             _mapper = mapper;
@@ -58,6 +60,8 @@ namespace ZPProductManagement.Web.Controllers
             {
                 TempData["Failure"] = result.Message;
 
+                _uow.Rollback();
+
                 return RedirectToAction("Index", "Product");
             }
 
@@ -82,6 +86,29 @@ namespace ZPProductManagement.Web.Controllers
             var product = _mapper.Map<ShowProductViewModel>(maybeProduct.Value);
 
             return View(product);
+        }
+
+        [HttpPost]
+        [Route("{id}")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Delete([FromRoute] Guid id)
+        {
+            var result = await _deleteProduct.Execute(id);
+
+            if (result.Failure)
+            {
+                TempData["Failure"] = result.Message;
+
+                _uow.Rollback();
+
+                return RedirectToAction("Index", "Product");
+            }
+
+            TempData["Success"] = "Product has been deleted";
+
+            _uow.Commit();
+
+            return RedirectToAction("Index", "Product");
         }
 
         private IEnumerable<Task<Result>> Create(IFormFile file)
