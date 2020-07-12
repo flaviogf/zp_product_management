@@ -42,6 +42,8 @@ namespace ZPProductManagement.Web.Controllers
             {
                 TempData["Failure"] = result.Message;
 
+                _uow.Rollback();
+
                 return RedirectToAction("Index", "Product");
             }
 
