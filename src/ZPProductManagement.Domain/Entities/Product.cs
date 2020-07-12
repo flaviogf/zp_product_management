@@ -11,7 +11,16 @@ namespace ZPProductManagement.Domain.Entities
     {
         private readonly List<File> _files = new List<File>();
 
-        public Product(Identifier id, Category category, Name name, Description description, Price price, Quantity quantity, IEnumerable<File> files)
+        public Product
+        (
+            Identifier id,
+            Category category,
+            Name name,
+            Description description,
+            Price price,
+            Quantity quantity,
+            IEnumerable<File> files
+        )
         {
             if (id == null)
             {
@@ -61,6 +70,12 @@ namespace ZPProductManagement.Domain.Entities
             Quantity = quantity;
 
             AddRange(files);
+
+            Activated = new Activated(this);
+            Archived = new Archived(this);
+            Deleted = new Deleted(this);
+
+            Status = Activated;
         }
 
         public Identifier Id { get; }
@@ -77,11 +92,34 @@ namespace ZPProductManagement.Domain.Entities
 
         public IReadOnlyList<File> Files => new ReadOnlyCollection<File>(_files);
 
+        public Status Status { get; internal protected set; }
+
+        public Status Activated { get; }
+
+        public Status Archived { get; }
+
+        public Status Deleted { get; }
+
         public Result AddRange(IEnumerable<File> files)
         {
             _files.AddRange(files);
 
             return Result.Ok();
+        }
+
+        public Result Active()
+        {
+            return Status.Active();
+        }
+
+        public Result Archive()
+        {
+            return Status.Archive();
+        }
+
+        public Result Delete()
+        {
+            return Status.Delete();
         }
     }
 }
