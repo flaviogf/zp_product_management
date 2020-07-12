@@ -25,13 +25,36 @@ namespace ZPProductManagement.Web.Infrastructure
         {
             try
             {
-                var insertProduct = "INSERT INTO [dbo].[Products] ([Id], [CategoryId], [Name], [Description], [Price], [Quantity]) VALUES (@Id, @CategoryId, @Name, @Description, @Price, @Quantity)";
+                var insertProduct = @"
+                    IF NOT EXISTS (SELECT 1 FROM [dbo].[Products] WHERE [Id] = @Id)
+                        INSERT INTO [dbo].[Products] ([Id], [CategoryId], [Name], [Description], [Price], [Quantity], [Status])
+                        VALUES (@Id, @CategoryId, @Name, @Description, @Price, @Quantity, @Status)
+                    ELSE
+                        UPDATE [dbo].[Products]
+                        SET [CategoryId] = @CategoryId, [Name] = @Name, [Description] = @Description, [Price] = @Price, [Quantity] = @Quantity, [Status] = @Status
+                        WHERE [Id] = @Id
+                ";
 
                 await _uow.Connection.ExecuteAsync(insertProduct, productAdapter, transaction: _uow.Transaction);
 
-                var insertFile = "INSERT INTO [dbo].[ProductFiles] ([ProductId], [FileId]) VALUES (@ProductId, @FileId)";
+                var deleteFiles = @"
+                    DELETE FROM [dbo].[ProductFiles]
+                    WHERE [ProductId] = @ProductId
+                ";
 
-                var tasks = productAdapter.FileIds.Select(it => _uow.Connection.ExecuteAsync(insertFile, new { ProductId = productAdapter.Id, FileId = it }, transaction: _uow.Transaction));
+                var deleteFilesParam = new
+                {
+                    ProductId = productAdapter.Id
+                };
+
+                await _uow.Connection.ExecuteAsync(deleteFiles, param: deleteFilesParam, transaction: _uow.Transaction);
+
+                var insertFiles = @"
+                    INSERT INTO [dbo].[ProductFiles] ([ProductId], [FileId])
+                    VALUES (@ProductId, @FileId)
+                ";
+
+                var tasks = productAdapter.FileIds.Select(it => _uow.Connection.ExecuteAsync(insertFiles, new { ProductId = productAdapter.Id, FileId = it }, transaction: _uow.Transaction));
 
                 await Task.WhenAll(tasks);
 
@@ -49,7 +72,12 @@ namespace ZPProductManagement.Web.Infrastructure
         {
             try
             {
-                var selectProduct = "SELECT TOP 1 p.[Id], p.[Name], p.[Description], p.[Price], p.[Quantity], c.[Id] [CategoryId], c.[Name] [CategoryName] FROM [dbo].[Products] p JOIN [dbo].[Categories] c ON p.[CategoryId] = c.[Id] WHERE p.Id = @Id";
+                var selectProduct = @"
+                    SELECT TOP 1 p.[Id], p.[Name], p.[Description], p.[Price], p.[Quantity], c.[Id] [CategoryId], c.[Name] [CategoryName], p.[Status]
+                    FROM [dbo].[Products] p
+                    JOIN [dbo].[Categories] c ON p.[CategoryId] = c.[Id]
+                    WHERE p.Id = @Id
+                ";
 
                 var selectProductParam = new
                 {
@@ -65,7 +93,12 @@ namespace ZPProductManagement.Web.Infrastructure
 
                 var product = maybeProduct.Value;
 
-                var selectFiles = "SELECT f.[Id], f.[Name], f.[Path], f.[Extension] FROM ProductFiles pf JOIN Files f ON pf.[FileId] = f.[Id] WHERE pf.[ProductId] = @ProductId";
+                var selectFiles = @"
+                    SELECT f.[Id], f.[Name], f.[Path], f.[Extension]
+                    FROM ProductFiles pf
+                    JOIN Files f ON pf.[FileId] = f.[Id]
+                    WHERE pf.[ProductId] = @ProductId
+                    ORDER BY f.[Name] ASC";
 
                 var selectFilesParam = new
                 {
@@ -74,7 +107,7 @@ namespace ZPProductManagement.Web.Infrastructure
 
                 var files = await _uow.Connection.QueryAsync<InputFileAdapter>(selectFiles, param: selectFilesParam, transaction: _uow.Transaction);
 
-                return new ShowProductAdapter(product.Id, product.Name, product.Description, product.Price, product.Quantity, product.CategoryId, product.CategoryName, files);
+                return new ShowProductAdapter(product.Id, product.Name, product.Description, product.Price, product.Quantity, product.CategoryId, product.CategoryName, files, product.Status);
             }
             catch (Exception ex)
             {
@@ -88,7 +121,10 @@ namespace ZPProductManagement.Web.Infrastructure
         {
             try
             {
-                var selectProducts = "SELECT p.[Id], p.[Name], p.[Description], p.[Price], p.[Quantity], c.[Id] [CategoryId], c.[Name] [CategoryName] FROM [dbo].[Products] p JOIN [dbo].[Categories] c ON p.[CategoryId] = c.[Id]";
+                var selectProducts = @"
+                    SELECT p.[Id], p.[Name], p.[Description], p.[Price], p.[Quantity], c.[Id] [CategoryId], c.[Name] [CategoryName], p.[Status]
+                    FROM [dbo].[Products] p
+                    JOIN [dbo].[Categories] c ON p.[CategoryId] = c.[Id]";
 
                 var products = await _uow.Connection.QueryAsync<IndexProductAdapter>(selectProducts, transaction: _uow.Transaction);
 
@@ -106,11 +142,19 @@ namespace ZPProductManagement.Web.Infrastructure
         {
             try
             {
-                var countProducts = "SELECT COUNT(*) FROM [dbo].[Products]";
+                var countProducts = @"
+                    SELECT COUNT(*)
+                    FROM [dbo].[Products]
+                ";
 
                 var total = await _uow.Connection.QueryFirstOrDefaultAsync<int>(countProducts, transaction: _uow.Transaction);
 
-                var selectProducts = "SELECT p.[Id], p.[Name], p.[Description], p.[Price], p.[Quantity], c.[Id] [CategoryId], c.[Name] [CategoryName] FROM [dbo].[Products] p JOIN [dbo].[Categories] c ON p.[CategoryId] = c.[Id] ORDER BY p.[Name] OFFSET @Skip ROWS FETCH NEXT @Take ROWS ONLY";
+                var selectProducts = @"
+                    SELECT p.[Id], p.[Name], p.[Description], p.[Price], p.[Quantity], c.[Id] [CategoryId], c.[Name] [CategoryName], p.[Status]
+                    FROM [dbo].[Products] p
+                    JOIN [dbo].[Categories] c ON p.[CategoryId] = c.[Id]
+                    ORDER BY p.[Name]
+                    OFFSET @Skip ROWS FETCH NEXT @Take ROWS ONLY";
 
                 var param = new
                 {

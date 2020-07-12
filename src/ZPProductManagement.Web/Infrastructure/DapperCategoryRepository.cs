@@ -23,7 +23,11 @@ namespace ZPProductManagement.Web.Infrastructure
         {
             try
             {
-                var sql = "SELECT TOP 1 * FROM [dbo].[Categories] WHERE [Name] = @Name";
+                var sql = @"
+                    SELECT TOP 1 [Id], [Name] FROM
+                    [dbo].[Categories]
+                    WHERE [Name] = @Name
+                ";
 
                 var param = new
                 {

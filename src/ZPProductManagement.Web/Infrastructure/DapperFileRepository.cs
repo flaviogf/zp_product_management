@@ -23,7 +23,10 @@ namespace ZPProductManagement.Web.Infrastructure
         {
             try
             {
-                var sql = "INSERT INTO [dbo].[Files] ([Id], [Name], [Path], [Extension]) VALUES (@Id, @Name, @Path, @Extension)";
+                var sql = @"
+                    INSERT INTO [dbo].[Files] ([Id], [Name], [Path], [Extension])
+                    VALUES (@Id, @Name, @Path, @Extension)
+                ";
 
                 await _uow.Connection.ExecuteAsync(sql, fileAdapter, transaction: _uow.Transaction);
 
@@ -41,7 +44,10 @@ namespace ZPProductManagement.Web.Infrastructure
         {
             try
             {
-                var sql = "SELECT TOP 1 * FROM [dbo].[Files] WHERE [Name] = @Name";
+                var sql = @"
+                    SELECT TOP 1 [Id], [Name], [Path], [Extension] FROM [dbo].[Files]
+                    WHERE [Name] = @Name
+                ";
 
                 var param = new
                 {
