@@ -21,6 +21,7 @@ namespace ZPProductManagement.Web.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(Guid id)
         {
             var result = await _archiveProduct.Execute(id);
@@ -28,6 +29,8 @@ namespace ZPProductManagement.Web.Controllers
             if (result.Failure)
             {
                 TempData["Failure"] = result.Message;
+
+                _uow.Rollback();
 
                 return RedirectToAction("Index", "Product");
             }
