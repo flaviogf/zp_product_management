@@ -68,9 +68,9 @@ $ cd zp_product_management
 
 # Run the seeds localized at ./scripts/seeds in an instance of SQL Server 2019
 
-$ dotnet restore
-
 # Ensure you had filling up the empty configurations in the appsettings.json file
+
+$ dotnet restore
 
 $ dotnet run --project ./src/ZPProductManagement.Web
 ```
