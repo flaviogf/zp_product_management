@@ -3,12 +3,15 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Localization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using System;
 using System.Data;
 using System.Data.SqlClient;
+using System.Globalization;
 using System.Reflection;
 using ZPProductManagement.Application;
 using ZPProductManagement.Application.Files;
@@ -83,12 +86,28 @@ namespace ZPProductManagement.Web
             services.AddControllersWithViews();
         }
 
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, UserManager<ApplicationUser> userManager)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IServiceProvider provider)
         {
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            app.UseApplicationStart((it) =>
+            {
+                it.UserName = _configuration["User:UserName"];
+                it.Email = _configuration["User:Email"];
+                it.Password = _configuration["User:Password"];
+
+                return provider;
+            });
+
+            app.UseRequestLocalization(it =>
+            {
+                it.DefaultRequestCulture = new RequestCulture("en-US", "en-US");
+                it.SupportedCultures = new CultureInfo[] { new CultureInfo("en-US") };
+                it.SupportedUICultures = new CultureInfo[] { new CultureInfo("en-US") };
+            });
 
             app.UseStaticFiles();
 
@@ -99,27 +118,6 @@ namespace ZPProductManagement.Web
             app.UseAuthorization();
 
             app.UseEndpoints(it => it.MapControllers());
-
-            var userName = _configuration.GetValue<string>("User:UserName");
-
-            var userExists = userManager.FindByNameAsync(userName).Result;
-
-            if (userExists != null)
-            {
-                return;
-            }
-
-            var email = _configuration.GetValue<string>("User:Email");
-
-            var password = _configuration.GetValue<string>("User:Password");
-
-            var user = new ApplicationUser
-            {
-                UserName = userName,
-                Email = email
-            };
-
-            userManager.CreateAsync(user, password).Wait();
         }
     }
 }
