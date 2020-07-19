@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using ZPProductManagement.Common;
-using ZPProductManagement.Common.Enums;
 using ZPProductManagement.Domain.Entities;
 using ZPProductManagement.Domain.ValueObjects;
 
@@ -79,46 +78,19 @@ namespace ZPProductManagement.Application.Products
 
             var files = filesOrError.Select(it => it.Value);
 
-            return productAdapter.Status switch
-            {
-                EStatus.Activated => Result.Ok<Product>(new ActivatedProduct(
-                    idOrError.Value,
-                    categoryOrError.Value,
-                    nameOrError.Value,
-                    descriptionOrError.Value,
-                    priceOrError.Value,
-                    quantityOrError.Value,
-                    files
-                )),
-                EStatus.Archived => Result.Ok<Product>(new ArchivedProduct(
-                    idOrError.Value,
-                    categoryOrError.Value,
-                    nameOrError.Value,
-                    descriptionOrError.Value,
-                    priceOrError.Value,
-                    quantityOrError.Value,
-                    files
-                )),
-                EStatus.Deleted => Result.Ok<Product>(new DeletedProduct(
-                    idOrError.Value,
-                    categoryOrError.Value,
-                    nameOrError.Value,
-                    descriptionOrError.Value,
-                    priceOrError.Value,
-                    quantityOrError.Value,
-                    files
-                )),
-                _ => Result.Ok(new Product
-                (
-                    idOrError.Value,
-                    categoryOrError.Value,
-                    nameOrError.Value,
-                    descriptionOrError.Value,
-                    priceOrError.Value,
-                    quantityOrError.Value,
-                    files
-                )),
-            };
+            var product = ProductFactory.Create
+            (
+                idOrError.Value,
+                categoryOrError.Value,
+                nameOrError.Value,
+                descriptionOrError.Value,
+                priceOrError.Value,
+                quantityOrError.Value,
+                files,
+                productAdapter.Status
+            );
+
+            return Result.Ok(product);
         }
 
         private async Task<Result<Category>> GetCategoryOrError(string categoryName)
