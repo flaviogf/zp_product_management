@@ -1,21 +1,26 @@
-﻿Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.26124.0
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30309.148
 MinimumVisualStudioVersion = 15.0.26124.0
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{ED975C80-9E02-462E-B295-9E63C746883D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZPProductManagement.Application", "src\ZPProductManagement.Application\ZPProductManagement.Application.csproj", "{AC5776CA-CFEA-48DD-A65F-6227E6F2CBC6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ZPProductManagement.Application", "src\ZPProductManagement.Application\ZPProductManagement.Application.csproj", "{AC5776CA-CFEA-48DD-A65F-6227E6F2CBC6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZPProductManagement.Domain", "src\ZPProductManagement.Domain\ZPProductManagement.Domain.csproj", "{3BA1B199-28AD-49CF-827F-1265962B5436}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ZPProductManagement.Domain", "src\ZPProductManagement.Domain\ZPProductManagement.Domain.csproj", "{3BA1B199-28AD-49CF-827F-1265962B5436}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZPProductManagement.Common", "src\ZPProductManagement.Common\ZPProductManagement.Common.csproj", "{6652055E-1A5F-47C5-AC64-B62E2CFFC466}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ZPProductManagement.Common", "src\ZPProductManagement.Common\ZPProductManagement.Common.csproj", "{6652055E-1A5F-47C5-AC64-B62E2CFFC466}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZPProductManagement.Web", "src\ZPProductManagement.Web\ZPProductManagement.Web.csproj", "{3F0ABCD5-BBD2-4297-A273-2FA023D22DD8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ZPProductManagement.Web", "src\ZPProductManagement.Web\ZPProductManagement.Web.csproj", "{3F0ABCD5-BBD2-4297-A273-2FA023D22DD8}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{3D4338AD-9B79-45DB-A114-9A21A703B332}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+		.gitignore = .gitignore
+		README.md = README.md
+	EndProjectSection
 EndProject
 Global
-	GlobalSection(SolutionProperties) = preSolution
-		HideSolutionNode = FALSE
-	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Debug|x64 = Debug|x64
@@ -74,10 +79,16 @@ Global
 		{3F0ABCD5-BBD2-4297-A273-2FA023D22DD8}.Release|x86.ActiveCfg = Release|Any CPU
 		{3F0ABCD5-BBD2-4297-A273-2FA023D22DD8}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{AC5776CA-CFEA-48DD-A65F-6227E6F2CBC6} = {ED975C80-9E02-462E-B295-9E63C746883D}
 		{3BA1B199-28AD-49CF-827F-1265962B5436} = {ED975C80-9E02-462E-B295-9E63C746883D}
 		{6652055E-1A5F-47C5-AC64-B62E2CFFC466} = {ED975C80-9E02-462E-B295-9E63C746883D}
 		{3F0ABCD5-BBD2-4297-A273-2FA023D22DD8} = {ED975C80-9E02-462E-B295-9E63C746883D}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {D57F2EAE-087F-4578-8A8D-AE3589896EB5}
 	EndGlobalSection
 EndGlobal

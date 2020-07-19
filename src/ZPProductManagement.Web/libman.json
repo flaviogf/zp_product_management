@@ -1,45 +1,45 @@
 {
-  "version": "1.0",
-  "defaultProvider": "unpkg",
-  "libraries": [
-    {
-      "library": "minireset.css@0.0.6",
-      "destination": "wwwroot\\lib\\minireset",
-      "files": [
-        "minireset.min.css"
-      ]
-    },
-    {
-      "provider": "cdnjs",
-      "library": "jquery@3.5.1",
-      "destination": "wwwroot\\lib\\jquery",
-      "files": [
-        "jquery.min.js",
-        "jquery.min.map"
-      ]
-    },
-    {
-      "library": "jquery-validation@1.19.2",
-      "destination": "wwwroot\\lib\\jquery-validation",
-      "files": [
-        "dist/jquery.validate.min.js"
-      ]
-    },
-    {
-      "provider": "cdnjs",
-      "library": "jquery-validation-unobtrusive@3.2.11",
-      "destination": "wwwroot\\lib\\jquery-validation-unobtrusive",
-      "files": [
-        "jquery.validate.unobtrusive.js"
-      ]
-    },
-    {
-      "library": "swiper@6.0.2",
-      "destination": "wwwroot\\lib\\swiper",
-      "files": [
-        "swiper-bundle.min.js",
-        "swiper-bundle.min.css"
-      ]
-    }
-  ]
+    "version": "1.0",
+    "defaultProvider": "unpkg",
+    "libraries": [
+        {
+            "library": "minireset.css@0.0.6",
+            "destination": "wwwroot\\lib\\minireset",
+            "files": [
+                "minireset.min.css"
+            ]
+        },
+        {
+            "provider": "cdnjs",
+            "library": "jquery@3.5.1",
+            "destination": "wwwroot\\lib\\jquery",
+            "files": [
+                "jquery.min.js",
+                "jquery.min.map"
+            ]
+        },
+        {
+            "library": "jquery-validation@1.19.2",
+            "destination": "wwwroot\\lib\\jquery-validation",
+            "files": [
+                "dist/jquery.validate.min.js"
+            ]
+        },
+        {
+            "provider": "cdnjs",
+            "library": "jquery-validation-unobtrusive@3.2.11",
+            "destination": "wwwroot\\lib\\jquery-validation-unobtrusive",
+            "files": [
+                "jquery.validate.unobtrusive.js"
+            ]
+        },
+        {
+            "library": "swiper@6.0.2",
+            "destination": "wwwroot\\lib\\swiper",
+            "files": [
+                "swiper-bundle.min.js",
+                "swiper-bundle.min.css"
+            ]
+        }
+    ]
 }
