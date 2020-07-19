@@ -6,7 +6,6 @@
   <a href="#rocket-project">Project</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
   <a href="#computer-techs">Techs</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
   <a href="#thinking-how-to-use">How to use</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
-  <a href="#notebook-notes">Notes</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
   <a href="#memo-license">License</a>
 </p>
 
@@ -52,6 +51,12 @@
 
 ## :thinking: How to use
 
+### Requirements
+
+- ASP.NET Core 3.1
+- SQL Server 2019
+- Docker 19.03.8
+
 ### Local
 
 ```bash
@@ -77,12 +82,6 @@ $ cd zp_product_management
 
 $ docker-compose up
 ```
-
-### Requirements
-
-- ASP.NET Core 3.1
-- SQL Server 2019
-- Docker 19.03.8
 
 ## :memo: License
 
