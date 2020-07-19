@@ -1,0 +1,19 @@
+version: '3.0'
+
+services:
+    web:
+        container_name: zpproductmanagement
+        build: .
+        image: br.com.flaviogf.zpproductmanagement:latest
+        environment:
+            - ConnectionStrings__Application=Server=
+            - ConnectionStrings__Identity=
+
+            - Upload__Directory=
+            - Upload__Url=
+
+            - User__UserName=
+            - User__Email=
+            - User__Password=
+        ports:
+            - 5000:80
