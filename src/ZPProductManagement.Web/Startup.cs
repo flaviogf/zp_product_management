@@ -42,6 +42,7 @@ namespace ZPProductManagement.Web
             services.AddScoped<CreateProduct>();
             services.AddScoped<DeleteProduct>();
             services.AddScoped<ArchiveProduct>();
+            services.AddScoped<ActiveProduct>();
 
             services.AddAutoMapper(it =>
             {
