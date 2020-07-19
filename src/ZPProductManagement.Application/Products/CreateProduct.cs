@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Threading.Tasks;
 using ZPProductManagement.Common;
+using ZPProductManagement.Common.Enums;
 using ZPProductManagement.Domain.Entities;
 using ZPProductManagement.Domain.ValueObjects;
 
@@ -68,7 +69,17 @@ namespace ZPProductManagement.Application.Products
 
             var files = filesOrError.Select(it => it.Value);
 
-            var product = new Product(idOrError.Value, categoryOrError.Value, nameOrError.Value, descriptionOrError.Value, priceOrError.Value, quantityOrError.Value, files);
+            var product = ProductFactory.Create
+            (
+                idOrError.Value,
+                categoryOrError.Value,
+                nameOrError.Value,
+                descriptionOrError.Value,
+                priceOrError.Value,
+                quantityOrError.Value,
+                files,
+                EStatus.Activated
+            );
 
             return Result.Ok(product);
         }
