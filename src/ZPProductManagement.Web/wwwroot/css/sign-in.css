@@ -95,6 +95,7 @@
     cursor: pointer;
     height: 45px;
     margin-top: 64px;
+    outline: none;
     text-transform: uppercase;
     width: 100%;
 }
