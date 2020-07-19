@@ -64,6 +64,10 @@ $ git clone https://github.com/flaviogf/zp_product_management.git
 
 $ cd zp_product_management
 
+# Run the migrations localized at ./scripts/migrations in an instance of SQL Server 2019
+
+# Run the seeds localized at ./scripts/seeds in an instance of SQL Server 2019
+
 $ dotnet restore
 
 # Ensure you had filling up the empty configurations in the appsettings.json file
@@ -77,6 +81,10 @@ $ dotnet run --project ./src/ZPProductManagement.Web
 $ git clone https://github.com/flaviogf/zp_product_management.git
 
 $ cd zp_product_management
+
+# Run the migrations localized at ./scripts/migrations in an instance of SQL Server 2019
+
+# Run the seeds localized at ./scripts/seeds in an instance of SQL Server 2019
 
 # Ensure you had filling up the empty configurations in the docker-compose.yml file
 
